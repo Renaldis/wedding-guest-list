@@ -1,5 +1,3 @@
-// prisma/seed.ts
-
 import { PrismaClient } from "@prisma/client";
 import { users, guests, logs } from "./sampleData";
 
@@ -7,6 +5,10 @@ const prisma = new PrismaClient();
 
 async function main() {
   console.log("🌱 Start seeding...");
+
+  await prisma.attendanceLog.deleteMany();
+  await prisma.guest.deleteMany();
+  await prisma.user.deleteMany();
 
   for (const user of users) {
     await prisma.user.upsert({
