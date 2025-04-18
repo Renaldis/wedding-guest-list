@@ -4,7 +4,9 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
-export default function Navbar() {
+import { Bars3Icon } from "@heroicons/react/24/solid";
+
+export default function Navbar({ toggleSheet }: { toggleSheet: () => void }) {
   const pathname = usePathname();
   const [userName, setUserName] = useState<string>("");
 
@@ -34,11 +36,13 @@ export default function Navbar() {
 
   return (
     <header className="bg-white shadow p-4 sticky top-0 z-10">
-      <div className="flex justify-between items-center mx-20">
-        <h1 className="text-lg font-semibold">{pageName}</h1>
-        <span className="text-lg text-gray-500 font-semibold">
-          Halo, {userName}
-        </span>
+      <div className="flex justify-between items-center md:mx-20 text-sm md:text-lg">
+        <h1 className="hidden md:block font-semibold">{pageName}</h1>
+
+        {/* Button to open sheet */}
+        <Bars3Icon className="h-6 w-6 md:hidden" onClick={toggleSheet} />
+
+        <span className="text-gray-500 font-semibold">Halo, {userName}</span>
       </div>
     </header>
   );

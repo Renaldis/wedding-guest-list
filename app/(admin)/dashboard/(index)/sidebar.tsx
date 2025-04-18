@@ -5,8 +5,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { menuItems } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetFooter,
+  SheetClose,
+} from "@/components/ui/sheet";
 
-export default function Sidebar() {
+export default function Sidebar({
+  isSheetOpen,
+  toggleSheet,
+}: {
+  isSheetOpen: boolean;
+  toggleSheet: () => void;
+}) {
   const pathname = usePathname();
   console.log(pathname);
 
@@ -56,6 +71,43 @@ export default function Sidebar() {
       <Button className="cursor-pointer" variant={"danger"}>
         Logout
       </Button>
+
+      {/* Mobile Sidebar (Sheet) */}
+      <Sheet open={isSheetOpen} onOpenChange={toggleSheet}>
+        <SheetContent side="left">
+          <SheetHeader>
+            <SheetTitle>Menu</SheetTitle>
+            <SheetDescription>
+              Choose an option from the menu below.
+            </SheetDescription>
+          </SheetHeader>
+
+          {/* Mobile Menu Items */}
+          <div className="flex flex-col gap-4 py-4">
+            {menuItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link href={item.href} key={item.name} onClick={toggleSheet}>
+                  <span
+                    className={`hover:bg-gray-200 px-3 py-2 rounded flex items-center gap-2 ${
+                      isActive && "text-blue-500 font-semibold"
+                    }`}
+                  >
+                    <item.icon className="h-6 w-6" />
+                    {item.name}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+
+          <SheetFooter>
+            <SheetClose asChild>
+              <Button type="submit">Close</Button>
+            </SheetClose>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
     </aside>
   );
 }
