@@ -1,3 +1,7 @@
+export const metadata = {
+  title: "Ucapan Selamat",
+};
+
 export default function GuestMessagesPage() {
   return (
     <>

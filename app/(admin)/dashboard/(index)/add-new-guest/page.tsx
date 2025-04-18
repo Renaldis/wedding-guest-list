@@ -1,3 +1,7 @@
+export const metadata = {
+  title: "Tambah Tamu Baru",
+};
+
 export default function AddNewGuestPage() {
   return (
     <>

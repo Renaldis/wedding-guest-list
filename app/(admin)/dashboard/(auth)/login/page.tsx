@@ -6,7 +6,7 @@ export default function LoginPage() {
       <div className="mb-8">
         {/* <img src={logo} alt="Workify logo" className="inline-block w-20" /> */}
         <span className="text-2xl font-semibold text-gray-800 ml-2">
-          GuesList Dashboard
+          GuestList Dashboard
         </span>
       </div>
       <LoginForm />
