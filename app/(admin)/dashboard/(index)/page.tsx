@@ -1,4 +1,4 @@
-export default function Name() {
+export default function DashboardPage() {
   return (
     <>
       <h1>Hello world</h1>
