@@ -6,11 +6,7 @@ import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie";
 import Link from "next/link";
-
-type FormData = {
-  email: string;
-  password: string;
-};
+import { type FormLogin } from "@/types";
 
 export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -19,9 +15,9 @@ export default function LoginForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<FormLogin>();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: FormLogin) => {
     try {
       const response = await axios.post("/api/auth/login", data);
 

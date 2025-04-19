@@ -4,18 +4,7 @@ import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-
-type Role = {
-  admin: "Admin";
-  resepsionis: "Resepsionis";
-};
-
-type FormData = {
-  name: string;
-  email: string;
-  password: string;
-  role: Role;
-};
+import { type FormRegister } from "@/types";
 
 export default function RegisterForm() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,9 +13,9 @@ export default function RegisterForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<FormRegister>();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: FormRegister) => {
     try {
       const response = await axios.post("/api/auth/register", data);
       if (response.status === 200 || response.status === 201) {

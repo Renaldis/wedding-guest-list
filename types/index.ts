@@ -1,0 +1,30 @@
+export type FormLogin = {
+  email: string;
+  password: string;
+};
+
+type Role = {
+  admin: "Admin";
+  resepsionis: "Resepsionis";
+};
+
+export type FormRegister = {
+  name: string;
+  email: string;
+  password: string;
+  role: Role;
+};
+
+export type GuestProp = {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  rsvpCode: string;
+  isAttending: boolean;
+  isPresent: boolean;
+  greetingMessage: string | null;
+  updatedById: string | null;
+  updatedAt: Date;
+  createdAt: Date;
+};
