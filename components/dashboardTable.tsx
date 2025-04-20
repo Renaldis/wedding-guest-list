@@ -4,12 +4,20 @@ import { type GuestProp } from "@/types";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
 import { Input } from "./ui/input";
 import { format } from "date-fns";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -24,15 +32,24 @@ export default function DashboardTable({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const [searchValue, setSearchValue] = useState(
     searchParams.get("search") || ""
   );
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const limit = Number(searchParams.get("limit")) || 10;
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set("search", searchValue);
-      params.set("page", "1");
+
+      if (searchValue) {
+        params.set("search", searchValue);
+        params.set("page", "1");
+      } else {
+        params.delete("search");
+      }
+
       router.push(`?${params.toString()}`);
     }, 500);
 
@@ -45,7 +62,6 @@ export default function DashboardTable({
     params.set("page", "1");
     router.push(`?${params.toString()}`);
   };
-  console.log(totalPages);
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
       <div className="flex items-center gap-5 mt-2 mb-5">
@@ -83,7 +99,7 @@ export default function DashboardTable({
         </div>
       </div>
       <Table>
-        <TableCaption>Data Daftar Tamu</TableCaption>
+        {/* <TableCaption>Data Daftar Tamu</TableCaption> */}
         <TableHeader>
           <TableRow className="bg-slate-100">
             <TableHead className="w-[80px]">No</TableHead>
@@ -101,7 +117,9 @@ export default function DashboardTable({
         <TableBody>
           {guests.map((guest, index) => (
             <TableRow key={guest.id}>
-              <TableCell className="font-medium">{index + 1}</TableCell>
+              <TableCell className="font-medium">
+                {(currentPage - 1) * limit + index + 1}
+              </TableCell>
               <TableCell>{guest.name}</TableCell>
               <TableCell>{guest.phone}</TableCell>
               <TableCell>
@@ -130,6 +148,43 @@ export default function DashboardTable({
           ))}
         </TableBody>
       </Table>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              href={`?${new URLSearchParams({
+                ...Object.fromEntries(searchParams),
+                page: String(Math.max(currentPage - 1, 1)),
+              }).toString()}`}
+            />
+          </PaginationItem>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <PaginationItem key={pageNum}>
+                <PaginationLink
+                  href={`?${new URLSearchParams({
+                    ...Object.fromEntries(searchParams),
+                    page: pageNum.toString(),
+                  }).toString()}`}
+                  isActive={pageNum === currentPage}
+                >
+                  {pageNum}
+                </PaginationLink>
+              </PaginationItem>
+            )
+          )}
+
+          <PaginationItem>
+            <PaginationNext
+              href={`?${new URLSearchParams({
+                ...Object.fromEntries(searchParams),
+                page: String(Math.min(currentPage + 1, totalPages)),
+              }).toString()}`}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 }
