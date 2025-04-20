@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/table";
 import { Input } from "./ui/input";
 import { format } from "date-fns";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function DashboardTable({
   guests,
@@ -20,12 +22,65 @@ export default function DashboardTable({
   guests: GuestProp[];
   totalPages: number;
 }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [searchValue, setSearchValue] = useState(
+    searchParams.get("search") || ""
+  );
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("search", searchValue);
+      params.set("page", "1");
+      router.push(`?${params.toString()}`);
+    }, 500);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchValue, router, searchParams]);
+
+  const handleLimitChange = (newLimit: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("limit", newLimit.toString());
+    params.set("page", "1");
+    router.push(`?${params.toString()}`);
+  };
   console.log(totalPages);
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
       <div className="flex items-center gap-5 mt-2 mb-5">
         <h1 className="text-lg font-semibold">Daftar Tamu</h1>
-        <Input className="w-40" placeholder="Cari nama tamu..." />
+        <Input
+          className="w-40"
+          placeholder="Cari nama tamu..."
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+        {searchValue && (
+          <button
+            onClick={() => setSearchValue("")}
+            className="ml-2 text-sm text-red-500 cursor-pointer"
+          >
+            Reset
+          </button>
+        )}
+        <div className="flex items-center gap-4 justify-end">
+          <label htmlFor="limit" className="text-sm">
+            Tampilkan:
+          </label>
+          <select
+            id="limit"
+            className="border border-gray-300 rounded px-2 py-1"
+            defaultValue={10}
+            onChange={(e) => handleLimitChange(Number(e.target.value))}
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+          <span className="text-sm">data per halaman</span>
+        </div>
       </div>
       <Table>
         <TableCaption>Data Daftar Tamu</TableCaption>
@@ -33,8 +88,10 @@ export default function DashboardTable({
           <TableRow className="bg-slate-100">
             <TableHead className="w-[80px]">No</TableHead>
             <TableHead>Nama</TableHead>
-            <TableHead>Phone</TableHead>
-            <TableHead>Kehadiran</TableHead>
+            <TableHead>No. HP</TableHead>
+            <TableHead>Status RSVP</TableHead>
+            <TableHead>konfirmasi kehadiran</TableHead>
+            <TableHead>Status Hadir di Acara</TableHead>
             <TableHead>Ditambahkan</TableHead>
             <TableHead>Diperbarui</TableHead>
             <TableHead>Diupdate Oleh</TableHead>
@@ -47,6 +104,16 @@ export default function DashboardTable({
               <TableCell className="font-medium">{index + 1}</TableCell>
               <TableCell>{guest.name}</TableCell>
               <TableCell>{guest.phone}</TableCell>
+              <TableCell>
+                {guest.isRSVPed ? "Sudah RSVP" : "Belum RSVP"}
+              </TableCell>
+              <TableCell>
+                {guest.isAttending === true
+                  ? "Akan Hadir"
+                  : guest.isAttending === false
+                  ? "Tidak Hadir"
+                  : "Belum Konfirmasi"}
+              </TableCell>
               <TableCell>{guest.isPresent ? "Hadir" : "Belum Hadir"}</TableCell>
               <TableCell>
                 {format(new Date(guest.createdAt), "yyyy-MM-dd HH:mm:ss")}

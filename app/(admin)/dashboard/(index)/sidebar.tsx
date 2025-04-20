@@ -23,7 +23,6 @@ export default function Sidebar({
   toggleSheet: () => void;
 }) {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <aside className="hidden w-64 bg-gray-800 text-white md:flex flex-col p-4 space-y-6">

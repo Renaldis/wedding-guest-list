@@ -21,7 +21,8 @@ export type GuestProp = {
   email: string | null;
   phone: string | null;
   rsvpCode: string;
-  isAttending: boolean;
+  isRSVPed: boolean;
+  isAttending: boolean | null;
   isPresent: boolean;
   greetingMessage: string | null;
   updatedById: string | null;

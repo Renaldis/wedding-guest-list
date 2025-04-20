@@ -33,10 +33,11 @@ enum Role {
 model Guest {
   id              String          @id @default(uuid())
   name            String
-  email           String?
-  phone           String?
+  email           String?         @unique
+  phone           String?         @unique
   rsvpCode        String          @unique
-  isAttending     Boolean         @default(false) // dari RSVP form
+  isRSVPed        Boolean         @default(false) //sudah konfirm rsvp
+  isAttending     Boolean? //akan hadir diacara?
   isPresent       Boolean         @default(false) // hadir di hari H
   greetingMessage String?
   updatedById     String? // siapa yang update terakhir

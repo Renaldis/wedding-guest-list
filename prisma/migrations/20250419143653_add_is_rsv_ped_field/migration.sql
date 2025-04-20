@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Guest" ADD COLUMN     "isRSVPed" BOOLEAN NOT NULL DEFAULT false,
+ALTER COLUMN "isAttending" DROP NOT NULL,
+ALTER COLUMN "isAttending" DROP DEFAULT;

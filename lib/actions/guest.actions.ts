@@ -1,6 +1,6 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function getPaginatedGuest({
@@ -18,13 +18,26 @@ export async function getPaginatedGuest({
 }) {
   const skip = (page - 1) * limit;
 
+  const whereClause: Prisma.GuestWhereInput = search
+    ? {
+        OR: [
+          {
+            name: {
+              contains: search,
+              mode: Prisma.QueryMode.insensitive,
+            },
+          },
+          {
+            phone: {
+              contains: search,
+            },
+          },
+        ],
+      }
+    : {};
+
   const guests = await prisma.guest.findMany({
-    where: {
-      name: {
-        contains: search,
-        mode: "insensitive",
-      },
-    },
+    where: whereClause,
     orderBy: {
       [sortBy]: sortOrder,
     },
@@ -33,12 +46,7 @@ export async function getPaginatedGuest({
   });
 
   const total = await prisma.guest.count({
-    where: {
-      name: {
-        contains: search,
-        mode: "insensitive",
-      },
-    },
+    where: whereClause,
   });
 
   return {
