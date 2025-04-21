@@ -23,7 +23,6 @@ export const guests = [
   {
     id: "guest-001",
     name: "Budi Santoso",
-    email: "budi.santoso@example.com",
     phone: "08123456789",
     rsvpCode: generateRsvpCode("Budi Santoso", "08123456789"),
     isRSVPed: true,
@@ -35,7 +34,6 @@ export const guests = [
   {
     id: "guest-002",
     name: "Siti Aminah",
-    email: "siti.aminah@example.com",
     phone: "08987654321",
     rsvpCode: generateRsvpCode("Siti Aminah", "08987654321"),
     isRSVPed: true,
@@ -47,7 +45,6 @@ export const guests = [
   {
     id: "guest-003",
     name: "Joko Suwiarto",
-    email: "joko.suwiarto@example.com",
     phone: "08955654321",
     rsvpCode: generateRsvpCode("Joko Suwiarto", "08955654321"),
     isRSVPed: false,
@@ -59,7 +56,6 @@ export const guests = [
   {
     id: "guest-004",
     name: "Ani Wijaya",
-    email: "ani.wijaya@example.com",
     phone: "08111222333",
     rsvpCode: generateRsvpCode("Ani Wijaya", "08111222333"),
     isRSVPed: true,
@@ -71,7 +67,6 @@ export const guests = [
   {
     id: "guest-005",
     name: "Rudi Hartono",
-    email: "rudi.hartono@example.com",
     phone: "08223344556",
     rsvpCode: generateRsvpCode("Rudi Hartono", "08223344556"),
     isRSVPed: true,
@@ -83,7 +78,6 @@ export const guests = [
   {
     id: "guest-006",
     name: "Yuni Kartika",
-    email: "yuni.kartika@example.com",
     phone: "08312355667",
     rsvpCode: generateRsvpCode("Yuni Kartika", "08312355667"),
     isRSVPed: false,
@@ -95,7 +89,6 @@ export const guests = [
   {
     id: "guest-007",
     name: "Andi Pratama",
-    email: "andi.pratama@example.com",
     phone: "08445566422",
     rsvpCode: generateRsvpCode("Andi Pratama", "08445566422"),
     isRSVPed: true,
@@ -107,7 +100,6 @@ export const guests = [
   {
     id: "guest-008",
     name: "Dina Sari",
-    email: "dina.sari@example.com",
     phone: "08333677889",
     rsvpCode: generateRsvpCode("Dina Sari", "08333677889"),
     isRSVPed: true,
@@ -119,7 +111,6 @@ export const guests = [
   {
     id: "guest-009",
     name: "Eko Nugroho",
-    email: "eko.nugroho@example.com",
     phone: "08667745690",
     rsvpCode: generateRsvpCode("Eko Nugroho", "08667745690"),
     isRSVPed: false,
@@ -131,7 +122,6 @@ export const guests = [
   {
     id: "guest-010",
     name: "Fitri Maulida",
-    email: "fitri.maulida@example.com",
     phone: "08668899001",
     rsvpCode: generateRsvpCode("Fitri Maulida", "08668899001"),
     isRSVPed: true,
@@ -143,7 +133,6 @@ export const guests = [
   {
     id: "guest-011",
     name: "Hasan Albar",
-    email: "hasan.albar@example.com",
     phone: "08786900112",
     rsvpCode: generateRsvpCode("Hasan Albar", "08786900112"),
     isRSVPed: true,
@@ -155,7 +144,6 @@ export const guests = [
   {
     id: "guest-012",
     name: "Nina Larasati",
-    email: "nina.larasati@example.com",
     phone: "08112233445",
     rsvpCode: generateRsvpCode("Nina Larasati", "08112233445"),
     isRSVPed: true,
@@ -167,7 +155,6 @@ export const guests = [
   {
     id: "guest-013",
     name: "Galih Prakoso",
-    email: "galih.prakoso@example.com",
     phone: "08223214556",
     rsvpCode: generateRsvpCode("Galih Prakoso", "08223214556"),
     isRSVPed: false,
@@ -179,7 +166,6 @@ export const guests = [
   {
     id: "guest-014",
     name: "Intan Permata",
-    email: "intan.permata@example.com",
     phone: "08334455667",
     rsvpCode: generateRsvpCode("Intan Permata", "08334455667"),
     isRSVPed: true,
@@ -191,7 +177,6 @@ export const guests = [
   {
     id: "guest-015",
     name: "Rizky Hidayat",
-    email: "rizky.hidayat@example.com",
     phone: "08445566778",
     rsvpCode: generateRsvpCode("Rizky Hidayat", "08445566778"),
     isRSVPed: true,
@@ -203,7 +188,6 @@ export const guests = [
   {
     id: "guest-016",
     name: "Mega Ayu",
-    email: "mega.ayu@example.com",
     phone: "08556677889",
     rsvpCode: generateRsvpCode("Mega Ayu", "08556677889"),
     isRSVPed: true,
@@ -215,7 +199,6 @@ export const guests = [
   {
     id: "guest-017",
     name: "Bayu Saputra",
-    email: "bayu.saputra@example.com",
     phone: "08667788990",
     rsvpCode: generateRsvpCode("Bayu Saputra", "08667788990"),
     isRSVPed: false,
@@ -227,7 +210,6 @@ export const guests = [
   {
     id: "guest-018",
     name: "Lia Marlina",
-    email: "lia.marlina@example.com",
     phone: "08778899001",
     rsvpCode: generateRsvpCode("Lia Marlina", "08778899001"),
     isRSVPed: true,
@@ -239,7 +221,6 @@ export const guests = [
   {
     id: "guest-019",
     name: "Fajar Nugraha",
-    email: "fajar.nugraha@example.com",
     phone: "08889900112",
     rsvpCode: generateRsvpCode("Fajar Nugraha", "08889900112"),
     isRSVPed: false,
@@ -251,7 +232,6 @@ export const guests = [
   {
     id: "guest-020",
     name: "Tari Ramadhani",
-    email: "tari.ramadhani@example.com",
     phone: "08990011223",
     rsvpCode: generateRsvpCode("Tari Ramadhani", "08990011223"),
     isRSVPed: true,

@@ -22,6 +22,25 @@ import { Input } from "./ui/input";
 import { format } from "date-fns";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+
+import { Button } from "./ui/button";
+import CustomDialog from "./customDialog";
+
+import { EditGuestFormSchema, editGuestForm } from "@/lib/validators";
+import { z } from "zod";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Label } from "./ui/label";
 
 export default function DashboardTable({
   guests,
@@ -38,6 +57,7 @@ export default function DashboardTable({
   );
   const currentPage = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit")) || 10;
+  const [openForm, setOpenForm] = useState(false);
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -62,6 +82,19 @@ export default function DashboardTable({
     params.set("page", "1");
     router.push(`?${params.toString()}`);
   };
+  const form = useForm<z.infer<typeof EditGuestFormSchema>>({
+    resolver: zodResolver(EditGuestFormSchema),
+    defaultValues: {
+      name: "",
+      isPresent: false,
+      phone: "",
+    },
+  });
+
+  const onSubmit = (data: editGuestForm) => {
+    console.log(data);
+  };
+
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
       <div className="flex items-center gap-5 mt-2 mb-5">
@@ -90,16 +123,16 @@ export default function DashboardTable({
             defaultValue={10}
             onChange={(e) => handleLimitChange(Number(e.target.value))}
           >
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={50}>50</option>
+            {[5, 10, 20, 50].map((num) => (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            ))}
           </select>
           <span className="text-sm">data per halaman</span>
         </div>
       </div>
       <Table>
-        {/* <TableCaption>Data Daftar Tamu</TableCaption> */}
         <TableHeader>
           <TableRow className="bg-slate-100">
             <TableHead className="w-[80px]">No</TableHead>
@@ -140,9 +173,12 @@ export default function DashboardTable({
                 {format(new Date(guest.updatedAt), "yyyy-MM-dd HH:mm:ss")}
               </TableCell>
               <TableCell>{guest.updatedById || "-"}</TableCell>
-              <TableCell>
-                <span className="text-blue-600 cursor-pointer">Edit</span> |{" "}
-                <span className="text-red-600 cursor-pointer">Delete</span>
+              <TableCell className="flex">
+                <PencilSquareIcon
+                  className="text-blue-600 cursor-pointer w-6 h-6 hover:text-blue-800"
+                  onClick={() => setOpenForm(true)}
+                />
+                <TrashIcon className="text-red-600 cursor-pointer w-6 h-6 hover:text-red-800" />
               </TableCell>
             </TableRow>
           ))}
@@ -185,6 +221,77 @@ export default function DashboardTable({
           </PaginationItem>
         </PaginationContent>
       </Pagination>
+
+      <CustomDialog
+        open={openForm}
+        onClose={setOpenForm}
+        title="Edit Profile"
+        description="Make changes to your profile here. Click save when you're done."
+      >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nama</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Nama Tamu" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="No Hp" {...field} type="number" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Controller
+              control={form.control}
+              name="isPresent"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Hadir?</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      value={field.value ? "true" : "false"}
+                      onValueChange={(val) => field.onChange(val === "true")}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="true" id="hadir" />
+                        <Label htmlFor="hadir">Hadir</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="false" id="tidak-hadir" />
+                        <Label htmlFor="tidak-hadir">Belum hadir</Label>
+                      </div>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              className="w-full cursor-pointer"
+              onClick={() => setOpenForm(false)}
+            >
+              Submit
+            </Button>
+          </form>
+        </Form>
+      </CustomDialog>
     </div>
   );
 }
