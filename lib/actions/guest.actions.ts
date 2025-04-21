@@ -1,6 +1,7 @@
 "use server";
 
 import { PrismaClient, Prisma } from "@prisma/client";
+import { editGuestForm } from "../validators";
 const prisma = new PrismaClient();
 
 export async function getPaginatedGuest({
@@ -56,3 +57,34 @@ export async function getPaginatedGuest({
     totalPages: Math.ceil(total / limit),
   };
 }
+
+export async function getGuest({ id }: { id: string }) {
+  const guest = await prisma.guest.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!guest) {
+    throw new Error("Guest not found");
+  }
+
+  return guest;
+}
+
+export async function editGuest(formData: editGuestForm) {
+  const guest = await prisma.guest.update({
+    where: {
+      id: formData.id,
+    },
+    data: {
+      name: formData.name,
+      phone: formData.phone,
+      isPresent: formData.isPresent,
+      updatedAt: new Date(),
+    },
+  });
+  return guest;
+}
+
+// note: selanjutnya buat logic yang update siapa

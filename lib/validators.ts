@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const EditGuestFormSchema = z.object({
+  id: z.string(),
   name: z
     .string()
     .min(3, { message: "Min 3 karakter." })
@@ -14,6 +15,7 @@ export const EditGuestFormSchema = z.object({
 });
 
 export type editGuestForm = {
+  id: string;
   name: string;
   phone: string;
   isPresent: boolean;

@@ -41,6 +41,7 @@ import {
 } from "./ui/form";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
+import { editGuest } from "@/lib/actions/guest.actions";
 
 export default function DashboardTable({
   guests,
@@ -58,6 +59,8 @@ export default function DashboardTable({
   const currentPage = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit")) || 10;
   const [openForm, setOpenForm] = useState(false);
+
+  const [guest, setGuest] = useState<editGuestForm | null>(null);
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -85,15 +88,41 @@ export default function DashboardTable({
   const form = useForm<z.infer<typeof EditGuestFormSchema>>({
     resolver: zodResolver(EditGuestFormSchema),
     defaultValues: {
+      id: "",
       name: "",
-      isPresent: false,
       phone: "",
+      isPresent: false,
     },
   });
 
-  const onSubmit = (data: editGuestForm) => {
-    console.log(data);
+  const onSubmit = async (data: editGuestForm) => {
+    try {
+      const result = await editGuest(data);
+      console.log("Berhasil update:", result);
+
+      router.refresh();
+    } catch (error) {
+      console.error("Gagal update:", error);
+    }
   };
+
+  const handleEdit = async (id: string) => {
+    const res = await fetch(`/api/guest/${id}`);
+    const data = await res.json();
+    setGuest(data);
+    setOpenForm(true);
+  };
+
+  useEffect(() => {
+    if (guest) {
+      form.reset({
+        id: guest.id,
+        name: guest.name,
+        isPresent: guest.isPresent,
+        phone: guest.phone,
+      });
+    }
+  }, [guest, form]);
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
@@ -176,7 +205,7 @@ export default function DashboardTable({
               <TableCell className="flex">
                 <PencilSquareIcon
                   className="text-blue-600 cursor-pointer w-6 h-6 hover:text-blue-800"
-                  onClick={() => setOpenForm(true)}
+                  onClick={() => handleEdit(guest.id)}
                 />
                 <TrashIcon className="text-red-600 cursor-pointer w-6 h-6 hover:text-red-800" />
               </TableCell>
