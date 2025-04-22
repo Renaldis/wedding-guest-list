@@ -82,6 +82,7 @@ export async function editGuest(formData: editGuestForm) {
       phone: formData.phone,
       isPresent: formData.isPresent,
       updatedAt: new Date(),
+      updatedById: formData.updatedById,
     },
   });
   return guest;

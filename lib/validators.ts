@@ -12,6 +12,7 @@ export const EditGuestFormSchema = z.object({
     .regex(/^08[1-9][0-9]{7,10}$/, { message: "No Telpon Tidak Valid" })
     .nonempty({ message: "wajib isi no telepon!" }),
   isPresent: z.boolean(),
+  updatedById: z.string().nullable(),
 });
 
 export type editGuestForm = {
@@ -19,4 +20,5 @@ export type editGuestForm = {
   name: string;
   phone: string;
   isPresent: boolean;
+  updatedById: string | null;
 };

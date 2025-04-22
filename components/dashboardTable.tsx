@@ -42,6 +42,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { editGuest } from "@/lib/actions/guest.actions";
+import Cookies from "js-cookie";
 
 export default function DashboardTable({
   guests,
@@ -52,6 +53,19 @@ export default function DashboardTable({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        setUserId(payload.userId || "ID-RESEPSIONIS");
+      } catch {
+        setUserId("RESEPSIONIS");
+      }
+    }
+  }, []);
 
   const [searchValue, setSearchValue] = useState(
     searchParams.get("search") || ""
@@ -120,9 +134,10 @@ export default function DashboardTable({
         name: guest.name,
         isPresent: guest.isPresent,
         phone: guest.phone,
+        updatedById: userId,
       });
     }
-  }, [guest, form]);
+  }, [guest, form, userId]);
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">

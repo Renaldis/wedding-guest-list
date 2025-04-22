@@ -18,7 +18,6 @@ export type FormRegister = {
 export type GuestProp = {
   id: string;
   name: string;
-  email: string | null;
   phone: string | null;
   rsvpCode: string;
   isRSVPed: boolean;
