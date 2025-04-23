@@ -41,7 +41,7 @@ import {
 } from "./ui/form";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
-import { editGuest } from "@/lib/actions/guest.actions";
+import { deleteGuest, editGuest } from "@/lib/actions/guest.actions";
 import Cookies from "js-cookie";
 
 export default function DashboardTable({
@@ -75,6 +75,7 @@ export default function DashboardTable({
   const [openForm, setOpenForm] = useState(false);
 
   const [guest, setGuest] = useState<editGuestForm | null>(null);
+  const [selectedGuest, setSelectedGuest] = useState<string>("");
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -125,6 +126,21 @@ export default function DashboardTable({
     const data = await res.json();
     setGuest(data);
     setOpenForm(true);
+  };
+
+  const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
+
+  const handleDelete = (id: string) => {
+    setIsOpenDelete(true);
+    setSelectedGuest(id);
+  };
+
+  const confirmDelete = async () => {
+    if (selectedGuest) {
+      await deleteGuest(selectedGuest);
+      router.refresh();
+      setIsOpenDelete(false);
+    }
   };
 
   useEffect(() => {
@@ -222,7 +238,10 @@ export default function DashboardTable({
                   className="text-blue-600 cursor-pointer w-6 h-6 hover:text-blue-800"
                   onClick={() => handleEdit(guest.id)}
                 />
-                <TrashIcon className="text-red-600 cursor-pointer w-6 h-6 hover:text-red-800" />
+                <TrashIcon
+                  className="text-red-600 cursor-pointer w-6 h-6 hover:text-red-800"
+                  onClick={() => handleDelete(guest.id)}
+                />
               </TableCell>
             </TableRow>
           ))}
@@ -265,6 +284,29 @@ export default function DashboardTable({
           </PaginationItem>
         </PaginationContent>
       </Pagination>
+
+      <CustomDialog
+        open={isOpenDelete}
+        onClose={setIsOpenDelete}
+        title="Confirm Delete"
+        description="Are you sure you want to delete this guest? This action cannot be undone."
+        footer={
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => setIsOpenDelete(false)}
+              className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={confirmDelete}
+              className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+            >
+              Confirm
+            </button>
+          </div>
+        }
+      />
 
       <CustomDialog
         open={openForm}

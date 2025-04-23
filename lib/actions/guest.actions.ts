@@ -19,23 +19,24 @@ export async function getPaginatedGuest({
 }) {
   const skip = (page - 1) * limit;
 
-  const whereClause: Prisma.GuestWhereInput = search
-    ? {
-        OR: [
-          {
-            name: {
-              contains: search,
-              mode: Prisma.QueryMode.insensitive,
-            },
+  const whereClause: Prisma.GuestWhereInput = {
+    isDeleted: false,
+    ...(search && {
+      OR: [
+        {
+          name: {
+            contains: search,
+            mode: Prisma.QueryMode.insensitive,
           },
-          {
-            phone: {
-              contains: search,
-            },
+        },
+        {
+          phone: {
+            contains: search,
           },
-        ],
-      }
-    : {};
+        },
+      ],
+    }),
+  };
 
   const guests = await prisma.guest.findMany({
     where: whereClause,
@@ -88,4 +89,13 @@ export async function editGuest(formData: editGuestForm) {
   return guest;
 }
 
-// note: selanjutnya buat logic yang update siapa
+export async function deleteGuest(id: string) {
+  await prisma.guest.update({
+    where: {
+      id,
+    },
+    data: {
+      isDeleted: true,
+    },
+  });
+}

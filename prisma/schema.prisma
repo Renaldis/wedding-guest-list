@@ -25,6 +25,7 @@ model Guest {
   rsvpCode        String          @unique
   isAttending     Boolean?
   isPresent       Boolean         @default(false)
+  isDeleted       Boolean         @default(false)
   greetingMessage String?
   updatedById     String?
   updatedAt       DateTime        @updatedAt

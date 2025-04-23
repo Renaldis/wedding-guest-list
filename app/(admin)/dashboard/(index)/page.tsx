@@ -24,8 +24,6 @@ export default async function DashboardPage({
     search,
   });
 
-  
-
   return (
     <>
       <h1>Ini Nanti Adalah Statistik Kehadiran</h1>
