@@ -25,10 +25,10 @@ export default async function DashboardPage({
   });
 
   return (
-    <>
+    <div className="">
       <h1>Ini Nanti Adalah Statistik Kehadiran</h1>
       <br />
       <DashboardTable guests={guests} totalPages={totalPages} />
-    </>
+    </div>
   );
 }

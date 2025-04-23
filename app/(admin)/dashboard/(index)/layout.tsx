@@ -9,15 +9,15 @@ export default function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isSheetOpen, setIsSheetOpen] = useState(false); // State untuk membuka/tutup sheet
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-  const toggleSheet = () => setIsSheetOpen((prev) => !prev); // Fungsi toggle untuk sheet
+  const toggleSheet = () => setIsSheetOpen((prev) => !prev);
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
       <Sidebar isSheetOpen={isSheetOpen} toggleSheet={toggleSheet} />
       {/* Main Content Area */}
-      <main className="flex-1 bg-gray-100">
+      <main className="flex-1 bg-gray-100 w-100 overflow-x-hidden">
         <Navbar toggleSheet={toggleSheet} />
 
         <div className="p-6">{children}</div>

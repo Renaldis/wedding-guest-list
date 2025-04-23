@@ -1,7 +1,8 @@
 "use server";
 
 import { PrismaClient, Prisma } from "@prisma/client";
-import { editGuestForm } from "../validators";
+import { createGuestForm, editGuestForm } from "../validators";
+import { generateRsvpCode } from "../utils";
 const prisma = new PrismaClient();
 
 export async function getPaginatedGuest({
@@ -69,6 +70,27 @@ export async function getGuest({ id }: { id: string }) {
   if (!guest) {
     throw new Error("Guest not found");
   }
+
+  return guest;
+}
+
+export async function createGuest(formData: createGuestForm) {
+  const totalGuests = await prisma.guest.count();
+
+  const nextNumber = totalGuests + 1;
+  const formattedId = `guest-${String(nextNumber).padStart(3, "0")}`;
+
+  const guest = await prisma.guest.create({
+    data: {
+      id: formattedId,
+      name: formData.name,
+      phone: formData.phone,
+      rsvpCode: generateRsvpCode(formData.name, formData.phone),
+      isPresent: formData.isPresent,
+      createdAt: new Date(),
+      updatedById: formData.updatedById,
+    },
+  });
 
   return guest;
 }
