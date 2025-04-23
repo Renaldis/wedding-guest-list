@@ -75,6 +75,16 @@ export async function getGuest({ id }: { id: string }) {
 }
 
 export async function createGuest(formData: createGuestForm) {
+  const existingGuest = await prisma.guest.findUnique({
+    where: {
+      phone: formData.phone,
+    },
+  });
+
+  if (existingGuest) {
+    throw new Error("Phone number already exists");
+  }
+
   const totalGuests = await prisma.guest.count();
 
   const nextNumber = totalGuests + 1;

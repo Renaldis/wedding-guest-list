@@ -1,12 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import { users, guests, logs } from "./sampleData";
+import { users, guests } from "./sampleData";
+import { sampleLogs } from "./sampleLog";
 
 const prisma = new PrismaClient();
 
 async function main() {
   console.log("🌱 Start seeding...");
 
-  await prisma.attendanceLog.deleteMany();
+  await prisma.log.deleteMany();
   await prisma.guest.deleteMany();
   await prisma.user.deleteMany();
 
@@ -28,12 +29,14 @@ async function main() {
     console.log(`🎉 Guest ${guest.name} seeded`);
   }
 
-  for (const log of logs) {
-    await prisma.attendanceLog.create({
+  for (const log of sampleLogs) {
+    await prisma.log.create({
       data: {
         guestId: log.guestId,
-        userId: log.userId,
+        actorId: log.actorId,
+        actorType: log.actorType,
         action: log.action,
+        createdAt: log.createdAt,
       },
     });
     console.log(`📝 Log for guestId ${log.guestId} seeded`);

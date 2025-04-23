@@ -52,7 +52,11 @@ export default function AddNewGuestForm() {
   function onSubmit(values: z.infer<typeof CreateNewGuestSchema>) {
     startTransition(async () => {
       try {
-        await createGuest({ ...values, updatedById: userId });
+        if (values.isPresent === true) {
+          await createGuest({ ...values, updatedById: userId });
+        } else {
+          await createGuest({ ...values, updatedById: null });
+        }
         alert("Tamu berhasil ditambahkan!");
         form.reset();
       } catch (err) {

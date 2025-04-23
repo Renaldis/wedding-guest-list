@@ -7,46 +7,45 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String          @id @default(uuid())
-  name      String
-  email     String          @unique
-  password  String
-  role      Role            @default(RESEPSIONIS)
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
-  logs      AttendanceLog[]
-  guests    Guest[]         @relation("UpdatedBy")
-}
-
-model Guest {
-  id              String          @id @default(uuid())
-  name            String
-  rsvpCode        String          @unique
-  isAttending     Boolean?
-  isPresent       Boolean         @default(false)
-  isDeleted       Boolean         @default(false)
-  greetingMessage String?
-  updatedById     String?
-  updatedAt       DateTime        @updatedAt
-  createdAt       DateTime        @default(now())
-  isRSVPed        Boolean         @default(false)
-  phone           String?         @unique
-  logs            AttendanceLog[]
-  updatedBy       User?           @relation("UpdatedBy", fields: [updatedById], references: [id])
-}
-
-model AttendanceLog {
-  id        String   @id @default(uuid())
-  guestId   String
-  userId    String
-  action    String
-  timestamp DateTime @default(now())
-  guest     Guest    @relation(fields: [guestId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
-}
-
 enum Role {
   ADMIN
   RESEPSIONIS
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(RESEPSIONIS)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  guests    Guest[]  @relation("UpdatedBy")
+}
+
+model Guest {
+  id              String   @id @default(uuid())
+  name            String
+  rsvpCode        String   @unique
+  isAttending     Boolean? @default(false)
+  isPresent       Boolean  @default(false)
+  isDeleted       Boolean  @default(false)
+  greetingMessage String?
+  updatedById     String?
+  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
+  isRSVPed        Boolean  @default(false)
+  phone           String?  @unique
+  updatedBy       User?    @relation("UpdatedBy", fields: [updatedById], references: [id])
+  Log             Log[]    @relation("GuestLogs")
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  guestId   String
+  guest     Guest    @relation("GuestLogs", fields: [guestId], references: [id])
+  actorId   String
+  actorType String // 'user' | 'guest'
+  action    String
+  createdAt DateTime @default(now())
 }

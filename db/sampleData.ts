@@ -27,9 +27,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Budi Santoso", "08123456789"),
     isRSVPed: true,
     isAttending: true,
-    isPresent: true,
     greetingMessage: "Terima kasih undangannya!",
-    updatedById: "user-resepsionis-1",
   },
   {
     id: "guest-002",
@@ -38,9 +36,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Siti Aminah", "08987654321"),
     isRSVPed: true,
     isAttending: false,
-    isPresent: false,
     greetingMessage: "Mohon maaf tidak bisa hadir.",
-    updatedById: "user-admin-1",
   },
   {
     id: "guest-003",
@@ -49,9 +45,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Joko Suwiarto", "08955654321"),
     isRSVPed: false,
     isAttending: null,
-    isPresent: false,
     greetingMessage: "",
-    updatedById: null,
   },
   {
     id: "guest-004",
@@ -60,9 +54,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Ani Wijaya", "08111222333"),
     isRSVPed: true,
     isAttending: true,
-    isPresent: true,
     greetingMessage: "Sampai jumpa di hari bahagia!",
-    updatedById: "user-admin-1",
   },
   {
     id: "guest-005",
@@ -71,9 +63,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Rudi Hartono", "08223344556"),
     isRSVPed: true,
     isAttending: false,
-    isPresent: false,
     greetingMessage: "Maaf belum bisa hadir.",
-    updatedById: "user-admin-1",
   },
   {
     id: "guest-006",
@@ -82,9 +72,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Yuni Kartika", "08312355667"),
     isRSVPed: false,
     isAttending: null,
-    isPresent: false,
     greetingMessage: "",
-    updatedById: null,
   },
   {
     id: "guest-007",
@@ -93,9 +81,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Andi Pratama", "08445566422"),
     isRSVPed: true,
     isAttending: true,
-    isPresent: true,
     greetingMessage: "Selamat menempuh hidup baru!",
-    updatedById: "user-resepsionis-1",
   },
   {
     id: "guest-008",
@@ -104,9 +90,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Dina Sari", "08333677889"),
     isRSVPed: true,
     isAttending: false,
-    isPresent: false,
     greetingMessage: "Semoga acaranya lancar!",
-    updatedById: "user-resepsionis-1",
   },
   {
     id: "guest-009",
@@ -115,9 +99,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Eko Nugroho", "08667745690"),
     isRSVPed: false,
     isAttending: null,
-    isPresent: false,
     greetingMessage: "",
-    updatedById: null,
   },
   {
     id: "guest-010",
@@ -126,9 +108,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Fitri Maulida", "08668899001"),
     isRSVPed: true,
     isAttending: true,
-    isPresent: true,
     greetingMessage: "Terima kasih telah mengundang kami!",
-    updatedById: "user-admin-1",
   },
   {
     id: "guest-011",
@@ -137,9 +117,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Hasan Albar", "08786900112"),
     isRSVPed: true,
     isAttending: true,
-    isPresent: true,
     greetingMessage: "Acaranya luar biasa!",
-    updatedById: "user-resepsionis-1",
   },
   {
     id: "guest-012",
@@ -148,9 +126,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Nina Larasati", "08112233445"),
     isRSVPed: true,
     isAttending: true,
-    isPresent: false,
     greetingMessage: "Maaf ada halangan datang.",
-    updatedById: "user-admin-1",
   },
   {
     id: "guest-013",
@@ -159,9 +135,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Galih Prakoso", "08223214556"),
     isRSVPed: false,
     isAttending: null,
-    isPresent: false,
     greetingMessage: "",
-    updatedById: null,
   },
   {
     id: "guest-014",
@@ -170,9 +144,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Intan Permata", "08334455667"),
     isRSVPed: true,
     isAttending: true,
-    isPresent: true,
     greetingMessage: "Congrats buat pengantinnya!",
-    updatedById: "user-admin-1",
   },
   {
     id: "guest-015",
@@ -181,9 +153,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Rizky Hidayat", "08445566778"),
     isRSVPed: true,
     isAttending: false,
-    isPresent: false,
     greetingMessage: "Semoga jadi keluarga sakinah!",
-    updatedById: "user-resepsionis-1",
   },
   {
     id: "guest-016",
@@ -192,9 +162,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Mega Ayu", "08556677889"),
     isRSVPed: true,
     isAttending: true,
-    isPresent: false,
     greetingMessage: "Semoga bahagia selalu!",
-    updatedById: "user-admin-1",
   },
   {
     id: "guest-017",
@@ -203,9 +171,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Bayu Saputra", "08667788990"),
     isRSVPed: false,
     isAttending: null,
-    isPresent: false,
     greetingMessage: "",
-    updatedById: null,
   },
   {
     id: "guest-018",
@@ -214,9 +180,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Lia Marlina", "08778899001"),
     isRSVPed: true,
     isAttending: true,
-    isPresent: true,
     greetingMessage: "Terima kasih sudah mengundang!",
-    updatedById: "user-resepsionis-1",
   },
   {
     id: "guest-019",
@@ -225,9 +189,7 @@ export const guests = [
     rsvpCode: generateRsvpCode("Fajar Nugraha", "08889900112"),
     isRSVPed: false,
     isAttending: null,
-    isPresent: false,
     greetingMessage: "",
-    updatedById: null,
   },
   {
     id: "guest-020",
@@ -236,56 +198,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Tari Ramadhani", "08990011223"),
     isRSVPed: true,
     isAttending: true,
-    isPresent: true,
     greetingMessage: "Doa terbaik untuk pengantinnya!",
-    updatedById: "user-admin-1",
-  },
-];
-
-export const logs = [
-  {
-    guestId: "guest-001",
-    userId: "user-resepsionis-1",
-    action: "checked-in",
-  },
-  {
-    guestId: "guest-002",
-    userId: "user-admin-1",
-    action: "rsvp-submit",
-  },
-  {
-    guestId: "guest-004",
-    userId: "user-resepsionis-1",
-    action: "checked-in",
-  },
-  {
-    guestId: "guest-007",
-    userId: "user-resepsionis-1",
-    action: "checked-in",
-  },
-  {
-    guestId: "guest-010",
-    userId: "user-admin-1",
-    action: "checked-in",
-  },
-  {
-    guestId: "guest-011",
-    userId: "user-resepsionis-1",
-    action: "checked-in",
-  },
-  {
-    guestId: "guest-014",
-    userId: "user-admin-1",
-    action: "checked-in",
-  },
-  {
-    guestId: "guest-018",
-    userId: "user-resepsionis-1",
-    action: "checked-in",
-  },
-  {
-    guestId: "guest-020",
-    userId: "user-admin-1",
-    action: "checked-in",
   },
 ];
