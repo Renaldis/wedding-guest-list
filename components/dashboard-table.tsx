@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 import { Button } from "./ui/button";
-import CustomDialog from "./customDialog";
+import CustomDialog from "./custom-dialog";
 
 import { EditGuestFormSchema, editGuestForm } from "@/lib/validators";
 import { z } from "zod";

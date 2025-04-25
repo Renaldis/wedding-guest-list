@@ -1,4 +1,4 @@
-import DashboardTable from "@/components/dashboardTable";
+import DashboardTable from "@/components/dashboard-table";
 import { getPaginatedGuest } from "@/lib/actions/guest.actions";
 
 export const metadata = {

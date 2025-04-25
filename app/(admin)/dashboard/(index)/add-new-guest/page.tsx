@@ -1,4 +1,4 @@
-import AddNewGuestForm from "@/components/addNewGuestForm";
+import AddNewGuestForm from "@/components/add-new-guest-form";
 
 export const metadata = {
   title: "Tambah Tamu Baru",
