@@ -157,22 +157,24 @@ export default function DashboardTable({
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
-      <div className="flex items-center gap-5 mt-2 mb-5">
-        <h1 className="text-lg font-semibold">Daftar Tamu</h1>
-        <Input
-          className="w-40"
-          placeholder="Cari nama tamu..."
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        {searchValue && (
-          <button
-            onClick={() => setSearchValue("")}
-            className="ml-2 text-sm text-red-500 cursor-pointer"
-          >
-            Reset
-          </button>
-        )}
+      <div className="flex items-center gap-5 mt-2 mb-5 md:flex-row flex-col">
+        <div className="md:flex md:flex-row gap-2 flex-col">
+          <h1 className="text-lg font-semibold text-center">Daftar Tamu</h1>
+          <Input
+            className="w-40"
+            placeholder="Cari nama tamu..."
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          {searchValue && (
+            <button
+              onClick={() => setSearchValue("")}
+              className="ml-2 text-sm text-red-500 cursor-pointer"
+            >
+              Reset
+            </button>
+          )}
+        </div>
         <div className="flex items-center gap-4 justify-end">
           <label htmlFor="limit" className="text-sm">
             Tampilkan:

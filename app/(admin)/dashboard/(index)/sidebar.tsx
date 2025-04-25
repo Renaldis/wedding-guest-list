@@ -36,7 +36,7 @@ export default function Sidebar({
           return (
             <Link href={`${item.href}`} key={item.name}>
               <span
-                className={`hover:bg-gray-700 px-3 py-2 rounded flex items-center gap-2 ${
+                className={`hover:bg-gray-700 px-1 py-1 text-sm rounded flex items-center gap-2 ${
                   isActive && "text-blue-500 font-semibold"
                 }`}
               >
@@ -56,7 +56,7 @@ export default function Sidebar({
           return (
             <Link href={`${item.href}`} key={item.name}>
               <span
-                className={`hover:bg-gray-700 px-3 py-2 rounded flex items-center gap-2 ${
+                className={`hover:bg-gray-700 px-1 py-1 text-sm rounded flex items-center gap-2 ${
                   isActive && "text-blue-500 font-semibold"
                 }`}
               >

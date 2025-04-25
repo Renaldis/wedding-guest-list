@@ -1,16 +1,35 @@
 import GuestMessageList from "@/components/guest-message-list";
+import { guestsMessage } from "@/lib/actions/guest.actions";
 
 export const metadata = {
   title: "Ucapan Selamat",
 };
 
-export default function GuestMessagesPage() {
+export default async function GuestMessagesPage({
+  searchParams,
+}: {
+  searchParams: Record<string, string>;
+}) {
+  const params = await searchParams;
+
+  const page = Number(params.page) || 1;
+  const search = params.search || "";
+  const limit = Number(params.limit) || 10;
+
+  const { guests, totalPages } = await guestsMessage({
+    page,
+    limit,
+    sortBy: "createdAt",
+    sortOrder: "asc",
+    search,
+  });
+
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
       <h1 className="text-center text-xl font-medium">
         Daftar List Ucapan Selamat Para Tamu
       </h1>
-      <GuestMessageList />
+      <GuestMessageList guests={guests} totalPages={totalPages} />
     </div>
   );
 }

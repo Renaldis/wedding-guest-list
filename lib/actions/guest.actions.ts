@@ -149,6 +149,9 @@ export async function guestsMessage({
 
   const whereClause: Prisma.GuestWhereInput = {
     isDeleted: false,
+    greetingMessage: {
+      not: null,
+    },
     ...(search && {
       OR: [
         {
@@ -185,4 +188,15 @@ export async function guestsMessage({
     page,
     totalPages: Math.ceil(total / limit),
   };
+}
+
+export async function deleteComment(id: string) {
+  await prisma.guest.update({
+    where: { id },
+    data: {
+      greetingMessage: null,
+    },
+  });
+
+  return null;
 }
