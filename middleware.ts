@@ -7,12 +7,17 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
-  if (!token && req.nextUrl.pathname === "/dashboard") {
+  if (
+    !token &&
+    req.nextUrl.pathname.startsWith("/dashboard") &&
+    req.nextUrl.pathname !== "/dashboard/login"
+  ) {
     return NextResponse.redirect(new URL("/dashboard/login", req.url));
   }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/login", "/dashboard"],
+  matcher: ["/dashboard/:path*", "/dashboard/login"],
 };
