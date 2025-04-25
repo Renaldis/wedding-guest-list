@@ -14,6 +14,7 @@ import {
   SheetFooter,
   SheetClose,
 } from "@/components/ui/sheet";
+import { logout } from "@/lib/logout";
 
 export default function Sidebar({
   isSheetOpen,
@@ -67,7 +68,7 @@ export default function Sidebar({
           );
         })}
       </nav>
-      <Button className="cursor-pointer" variant={"danger"}>
+      <Button className="cursor-pointer" variant={"danger"} onClick={logout}>
         Logout
       </Button>
 
@@ -99,10 +100,15 @@ export default function Sidebar({
               );
             })}
           </div>
-
           <SheetFooter>
             <SheetClose asChild>
-              <Button type="submit">Close</Button>
+              <Button
+                type="submit"
+                className="bg-red-600 hover:bg-red-800"
+                onClick={logout}
+              >
+                Logout
+              </Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>
