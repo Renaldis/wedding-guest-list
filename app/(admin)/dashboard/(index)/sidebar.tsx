@@ -114,21 +114,23 @@ export default function Sidebar({
 
           {/* Mobile Menu Items */}
           <div className="flex flex-col gap-4 py-4">
-            {menuItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link href={item.href} key={item.name} onClick={toggleSheet}>
-                  <span
-                    className={`hover:bg-gray-200 px-3 py-2 rounded flex items-center gap-2 ${
-                      isActive && "text-blue-500 font-semibold"
-                    }`}
-                  >
-                    <item.icon className="h-6 w-6" />
-                    {item.name}
-                  </span>
-                </Link>
-              );
-            })}
+            {menuItems
+              .filter((item) => item?.roles?.includes(userRole!))
+              .map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link href={item.href} key={item.name} onClick={toggleSheet}>
+                    <span
+                      className={`hover:bg-gray-200 px-3 py-2 rounded flex items-center gap-2 ${
+                        isActive && "text-blue-500 font-semibold"
+                      }`}
+                    >
+                      <item.icon className="h-6 w-6" />
+                      {item.name}
+                    </span>
+                  </Link>
+                );
+              })}
           </div>
           <SheetFooter>
             <SheetClose asChild>
