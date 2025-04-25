@@ -15,6 +15,15 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { logout } from "@/lib/logout";
+import Cookies from "js-cookie";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { useEffect, useState } from "react";
+type User = {
+  userId: string;
+  name: string;
+  email: string;
+  role: "ADMIN" | "RESEPSIONIS";
+};
 
 export default function Sidebar({
   isSheetOpen,
@@ -24,6 +33,20 @@ export default function Sidebar({
   toggleSheet: () => void;
 }) {
   const pathname = usePathname();
+  const [userRole, setUserRole] = useState<"ADMIN" | "RESEPSIONIS" | null>(
+    null
+  );
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (!token) return;
+
+    const decode = jwt.decode(token) as (User & JwtPayload) | null;
+
+    if (decode?.role) {
+      setUserRole(decode.role);
+    }
+  }, []);
 
   return (
     <aside className="hidden w-64 bg-gray-800 text-white md:flex flex-col p-4 space-y-6">
@@ -32,42 +55,49 @@ export default function Sidebar({
       </div>
 
       <nav className="flex flex-col gap-4">
-        {menuItems.slice(0, 3).map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link href={`${item.href}`} key={item.name}>
-              <span
-                className={`hover:bg-gray-700 px-1 py-1 text-sm rounded flex items-center gap-2 ${
-                  isActive && "text-blue-500 font-semibold"
-                }`}
-              >
-                <item.icon className="h-6 w-6" />
-                {item.name}
-              </span>
-            </Link>
-          );
-        })}
+        {menuItems
+          .filter((item) => item?.roles?.includes(userRole!))
+          .slice(0, 3)
+          .map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link href={`${item.href}`} key={item.name}>
+                <span
+                  className={`hover:bg-gray-700 px-1 py-1 text-sm rounded flex items-center gap-2 ${
+                    isActive && "text-blue-500 font-semibold"
+                  }`}
+                >
+                  <item.icon className="h-6 w-6" />
+                  {item.name}
+                </span>
+              </Link>
+            );
+          })}
       </nav>
 
       <div className="border-t border-gray-600 my-2" />
 
       <nav className="flex flex-col gap-4">
-        {menuItems.slice(3).map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link href={`${item.href}`} key={item.name}>
-              <span
-                className={`hover:bg-gray-700 px-1 py-1 text-sm rounded flex items-center gap-2 ${
-                  isActive && "text-blue-500 font-semibold"
-                }`}
-              >
-                <item.icon className="h-6 w-6" />
-                {item.name}
-              </span>
-            </Link>
-          );
-        })}
+        {menuItems
+          .filter((item) => item?.roles?.includes(userRole!))
+          .slice(3)
+          .map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link href={`${item.href}`} key={item.name}>
+                <span
+                  className={`hover:bg-gray-700 px-1 py-1 text-sm rounded flex items-center gap-2 ${
+                    isActive && "text-blue-500 font-semibold"
+                  }`}
+                >
+                  <item.icon className="h-6 w-6" />
+                  {item.name}
+                </span>
+              </Link>
+            );
+          })}
       </nav>
+
       <Button className="cursor-pointer" variant={"danger"} onClick={logout}>
         Logout
       </Button>
