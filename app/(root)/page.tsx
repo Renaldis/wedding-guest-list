@@ -10,8 +10,9 @@ export default function Home() {
   const [isOpenLP, setIsOpenLP] = useState<boolean>(false);
   return (
     <>
+      {/* INVITATION SECTION */}
       {!isOpenLP ? (
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full ">
           <Image
             src={"/old-tree-bg-art2.jpg"}
             alt="old-tree-bg-art2"
@@ -27,6 +28,7 @@ export default function Home() {
                   width={400}
                   height={200}
                   className="rounded-md shadow-md"
+                  priority
                 />
               </div>
               <div className="flex flex-col justify-center items-center space-y-2 text-center md:flex-1/2">
@@ -48,6 +50,7 @@ export default function Home() {
           </div>
         </div>
       ) : (
+        // LANDING PAGE GUEST SECTION
         <LandingPageGuest />
       )}
     </>
