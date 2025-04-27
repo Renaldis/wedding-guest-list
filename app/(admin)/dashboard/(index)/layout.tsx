@@ -20,7 +20,7 @@ export default function DashboardLayout({
       <main className="flex-1 bg-gray-100 w-100 overflow-x-hidden">
         <Navbar toggleSheet={toggleSheet} />
 
-        <div className="p-6 h-screen overflow-y-auto pb-20">{children}</div>
+        <div className="p-6 h-screen overflow-y-auto pb-40">{children}</div>
       </main>
     </div>
   );
