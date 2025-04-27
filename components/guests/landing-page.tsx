@@ -9,6 +9,7 @@ import butterflyAnimation from "@/public/bird_lottie.json";
 import HeroSection from "./hero-section";
 import MessageSection from "./message-section";
 import CoupleSection from "./couple-section";
+import VenueSection from "./venue-section";
 
 export default function LandingPageGuest() {
   return (
@@ -43,6 +44,19 @@ export default function LandingPageGuest() {
         <MessageSection />
         {/* Couple Section */}
         <CoupleSection />
+
+        <div className="">
+          <Image
+            src={"/line-decorative.png"}
+            alt="line-decorative"
+            layout={"auto"}
+            width={1000}
+            height={10}
+            className="w-full"
+          />
+        </div>
+        {/* Venue Section */}
+        <VenueSection />
       </div>
     </div>
   );

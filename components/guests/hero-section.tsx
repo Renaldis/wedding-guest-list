@@ -21,7 +21,7 @@ export default function HeroSection() {
         <Lottie
           animationData={arrowDownAnimation}
           loop={true}
-          className="w-20 2xl:w-60"
+          className="w-50 2xl:w-70"
         />
       </div>
       <div className="mt-10 flex flex-col gap-5 2xl:gap-10">

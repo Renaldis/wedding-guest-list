@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function CoupleSection() {
   return (
-    <div className="h-screen space-y-10 mt-16 md:hidden">
+    <div className="min-h-screen space-y-10 mt-16 lg:hidden">
       {/* Man */}
       <div className="flex flex-col items-center">
         <Image

@@ -8,7 +8,7 @@ import butterflyAnimation from "@/public/bird_lottie.json";
 
 export default function MessageSection() {
   return (
-    <div className="message-section p-6 text-center">
+    <div className="message-section p-6 text-center relative">
       <Image
         src={"/orn-header-2.webp"}
         alt="orn-header-2"
@@ -21,7 +21,7 @@ export default function MessageSection() {
         alt="rose-animation"
         width={100}
         height={100}
-        className="absolute left-35 -mt-13"
+        className="absolute top-0 left-1/2 transform -translate-y-1/3 -translate-x-1/3"
       />
       <Card className="shadow-md">
         <CardContent>
