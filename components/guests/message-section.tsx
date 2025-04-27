@@ -21,7 +21,7 @@ export default function MessageSection() {
         alt="rose-animation"
         width={100}
         height={100}
-        className="absolute top-0 left-1/2 transform -translate-y-1/3 -translate-x-1/3"
+        className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/3"
       />
       <Card className="shadow-md">
         <CardContent>

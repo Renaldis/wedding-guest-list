@@ -11,8 +11,9 @@ import MessageSection from "./message-section";
 import CoupleSection from "./couple-section";
 import VenueSection from "./venue-section";
 import FormRSVPSection from "./form-rsvp-section";
+import { GuestProp } from "@/types";
 
-export default function LandingPageGuest() {
+export default function LandingPageGuest({ guest }: { guest: GuestProp }) {
   return (
     <div className="grid lg:grid-cols-3 overflow-y-auto">
       <div className="hidden col-span-2 lg:block">
@@ -46,20 +47,19 @@ export default function LandingPageGuest() {
         {/* Couple Section */}
         <CoupleSection />
         {/* Line */}
-        <div className="">
-          <Image
-            src={"/line-decorative.png"}
-            alt="line-decorative"
-            layout={"auto"}
-            width={1000}
-            height={10}
-            className="w-full"
-          />
-        </div>
+
+        <Image
+          src={"/line-decorative.png"}
+          alt="line-decorative"
+          width={1000}
+          height={10}
+          className="w-full"
+        />
+
         {/* Venue Section */}
         <VenueSection />
         {/* Form RSVP Section */}
-        <FormRSVPSection />
+        <FormRSVPSection guest={guest} />
       </div>
     </div>
   );

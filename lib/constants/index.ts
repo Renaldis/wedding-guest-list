@@ -58,3 +58,16 @@ export const menuItems = [
     roles: ["ADMIN"],
   },
 ];
+export const defaultGuest = {
+  id: "",
+  name: "",
+  rsvpCode: "",
+  phone: "",
+  isAttending: false,
+  isRSVPed: false,
+  isPresent: false,
+  greetingMessage: null,
+  updatedById: null,
+  updatedAt: new Date(),
+  createdAt: new Date(),
+};

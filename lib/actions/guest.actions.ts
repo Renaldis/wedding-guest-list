@@ -74,6 +74,20 @@ export async function getGuest({ id }: { id: string }) {
   return guest;
 }
 
+export async function getGuestByCode({ rsvpCode }: { rsvpCode: string }) {
+  const guest = await prisma.guest.findUnique({
+    where: {
+      rsvpCode,
+    },
+  });
+
+  if (!guest) {
+    throw new Error("Guest not found");
+  }
+
+  return guest;
+}
+
 export async function createGuest(formData: createGuestForm) {
   const existingGuest = await prisma.guest.findUnique({
     where: {

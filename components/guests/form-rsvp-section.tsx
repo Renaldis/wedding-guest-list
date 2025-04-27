@@ -21,16 +21,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { GuestProp } from "@/types";
+import { useEffect } from "react";
 
 const formSchemaRSVP = z.object({
   id: z.string(),
-  rsvpCode: z.string(),
-  name: z.string(),
-  phone: z.string(),
+  rsvpCode: z.string().nonempty({ message: "Code RSVP harus diisi." }),
+  name: z.string().nonempty({ message: "Nama lengkap harus diisi." }),
+  phone: z.string().nonempty({ message: "No HP Harus diisi." }),
   isAttending: z.boolean(),
 });
 
-export default function FormRSVPSection() {
+export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
   const form = useForm<z.infer<typeof formSchemaRSVP>>({
     resolver: zodResolver(formSchemaRSVP),
     defaultValues: {
@@ -41,6 +43,21 @@ export default function FormRSVPSection() {
       isAttending: undefined,
     },
   });
+
+  useEffect(() => {
+    if (guest) {
+      form.reset({
+        id: guest.id || "",
+        name: guest.name || "",
+        rsvpCode: guest.rsvpCode || "",
+        phone: guest.phone || "",
+        isAttending:
+          guest.isAttending !== null && guest.isAttending !== undefined
+            ? guest.isAttending
+            : undefined,
+      });
+    }
+  }, [guest, form]);
 
   function onSubmit(values: z.infer<typeof formSchemaRSVP>) {
     console.log(values);

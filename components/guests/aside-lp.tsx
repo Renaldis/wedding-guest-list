@@ -6,15 +6,16 @@ export default function AsideLP() {
       <Image
         src="/womenNman.jpeg"
         alt="background-image"
-        fill
-        className="object-cover -z-10 opacity-40"
+        width={1000}
+        height={0}
+        className="object-cover -z-10 opacity-40 w-full h-screen"
         priority
       />
 
       {/* Content */}
       <div className="absolute inset-0 flex justify-center items-center">
         <div className="relative w-full max-w-4xl flex flex-col items-center px-4">
-          <div className="flex flex-col md:flex-row justify-around items-center w-full gap-8 md:gap-0">
+          <div className=" flex flex-col md:flex-row justify-around items-center w-full gap-8 md:gap-0">
             {/* Pengantin Pria */}
             <div className="flex flex-col items-center">
               <Image
