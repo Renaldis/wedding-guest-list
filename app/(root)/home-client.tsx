@@ -33,10 +33,13 @@ export default function HomeClient({ guest }: { guest: GuestProp }) {
                 />
               </div>
               <div className="flex flex-col justify-center items-center space-y-2 text-center md:flex-1/2">
-                <div className="mb-4">
-                  <p className="text-lg">Dear</p>
-                  <p className="text-2xl font-semibold">Putri</p>
-                </div>
+                {guest.id.trim() !== "" ? (
+                  <div className="mb-4">
+                    <p className="text-lg">Dear</p>
+                    <p className="text-2xl font-semibold">{guest.name}</p>
+                  </div>
+                ) : null}
+
                 <p className="text-sm">We Invite You To the Wedding of</p>
                 <h1 className="text-3xl font-bold">Fiqri & Meiliza</h1>
                 <p className="text-sm">21 Januari 2026</p>

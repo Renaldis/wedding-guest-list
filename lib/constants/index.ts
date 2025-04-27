@@ -63,11 +63,9 @@ export const defaultGuest = {
   name: "",
   rsvpCode: "",
   phone: "",
-  isAttending: false,
+  isAttending: null,
   isRSVPed: false,
   isPresent: false,
   greetingMessage: null,
   updatedById: null,
-  updatedAt: new Date(),
-  createdAt: new Date(),
 };

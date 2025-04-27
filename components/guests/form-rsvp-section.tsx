@@ -23,12 +23,14 @@ import {
 } from "@/components/ui/select";
 import { GuestProp } from "@/types";
 import { useEffect } from "react";
+import { Textarea } from "../ui/textarea";
 
 const formSchemaRSVP = z.object({
   id: z.string(),
   rsvpCode: z.string().nonempty({ message: "Code RSVP harus diisi." }),
   name: z.string().nonempty({ message: "Nama lengkap harus diisi." }),
   phone: z.string().nonempty({ message: "No HP Harus diisi." }),
+  greetingMessage: z.string().max(300, { message: "Maksimal 300 karakter" }),
   isAttending: z.boolean(),
 });
 
@@ -40,6 +42,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
       name: "",
       rsvpCode: "",
       phone: "",
+      greetingMessage: "",
       isAttending: undefined,
     },
   });
@@ -51,6 +54,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
         name: guest.name || "",
         rsvpCode: guest.rsvpCode || "",
         phone: guest.phone || "",
+        greetingMessage: guest.greetingMessage || "",
         isAttending:
           guest.isAttending !== null && guest.isAttending !== undefined
             ? guest.isAttending
@@ -111,6 +115,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
               </FormItem>
             )}
           />
+
           <Controller
             control={form.control}
             name="isAttending"
@@ -141,7 +146,23 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
               </FormItem>
             )}
           />
-
+          <FormField
+            control={form.control}
+            name="greetingMessage"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Ucapan Selamat</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Berikan Ucapan Selamat Anda"
+                    {...field}
+                    className="bg-white"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button type="submit">Submit</Button>
         </form>
       </Form>
