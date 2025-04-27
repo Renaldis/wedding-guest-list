@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
+
 import arrowDownAnimation from "@/public/arrow-down.json";
 import CountdownTimer from "./features/countdown-timer";
 import { Button } from "../ui/button";

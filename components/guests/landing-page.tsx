@@ -8,6 +8,7 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 import butterflyAnimation from "@/public/bird_lottie.json";
 import HeroSection from "./hero-section";
 import MessageSection from "./message-section";
+import CoupleSection from "./couple-section";
 
 export default function LandingPageGuest() {
   return (
@@ -40,6 +41,8 @@ export default function LandingPageGuest() {
         <HeroSection />
         {/* Message Section */}
         <MessageSection />
+        {/* Couple Section */}
+        <CoupleSection />
       </div>
     </div>
   );
