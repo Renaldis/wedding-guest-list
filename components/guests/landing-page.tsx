@@ -10,6 +10,7 @@ import HeroSection from "./hero-section";
 import MessageSection from "./message-section";
 import CoupleSection from "./couple-section";
 import VenueSection from "./venue-section";
+import FormRSVPSection from "./form-rsvp-section";
 
 export default function LandingPageGuest() {
   return (
@@ -44,7 +45,7 @@ export default function LandingPageGuest() {
         <MessageSection />
         {/* Couple Section */}
         <CoupleSection />
-
+        {/* Line */}
         <div className="">
           <Image
             src={"/line-decorative.png"}
@@ -57,6 +58,8 @@ export default function LandingPageGuest() {
         </div>
         {/* Venue Section */}
         <VenueSection />
+        {/* Form RSVP Section */}
+        <FormRSVPSection />
       </div>
     </div>
   );

@@ -35,7 +35,7 @@ export default function VenueSection() {
   ];
 
   return (
-    <div className="p-6 text-center">
+    <div className="p-6 text-center min-h-screen">
       <h1 className="text-2xl mb-15">Acara</h1>
       <div className="flex flex-col gap-10">
         {venues.map((venue, idx) => {
