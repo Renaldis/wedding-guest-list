@@ -7,7 +7,13 @@ import { InboxArrowDownIcon } from "@heroicons/react/24/solid";
 import LandingPageGuest from "@/components/guests/landing-page";
 import { GuestPropClient } from "@/types";
 
-export default function HomeClient({ guest }: { guest: GuestPropClient }) {
+export default function HomeClient({
+  guest,
+  messages,
+}: {
+  guest: GuestPropClient;
+  messages: GuestPropClient[];
+}) {
   const [isOpenLP, setIsOpenLP] = useState<boolean>(false);
 
   return (
@@ -54,7 +60,7 @@ export default function HomeClient({ guest }: { guest: GuestPropClient }) {
           </div>
         </div>
       ) : (
-        <LandingPageGuest guest={guest} />
+        <LandingPageGuest guest={guest} messages={messages} />
       )}
     </>
   );

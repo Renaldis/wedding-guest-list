@@ -242,3 +242,11 @@ export async function editGuestByCode(formData: editGuestFormByCode) {
   });
   return guest;
 }
+
+export async function listGuestMessages() {
+  const messages = await prisma.guest.findMany({
+    orderBy: { createdAt: "asc" },
+  });
+
+  return messages;
+}

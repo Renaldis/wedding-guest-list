@@ -16,8 +16,10 @@ import ListCommentSection from "./list-comment-section";
 
 export default function LandingPageGuest({
   guest,
+  messages,
 }: {
   guest: GuestPropClient;
+  messages: GuestPropClient[];
 }) {
   return (
     <div className="grid lg:grid-cols-3 overflow-y-auto">
@@ -66,7 +68,7 @@ export default function LandingPageGuest({
         {/* Form RSVP Section */}
         <FormRSVPSection guest={guest} />
         {/* List Comment Section */}
-        <ListCommentSection />
+        <ListCommentSection messages={messages} />
       </div>
     </div>
   );

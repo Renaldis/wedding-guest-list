@@ -1,4 +1,4 @@
-import { getGuestByCode } from "@/lib/actions/guest.actions";
+import { getGuestByCode, listGuestMessages } from "@/lib/actions/guest.actions";
 import HomeClient from "./home-client";
 import { defaultGuest } from "@/lib/constants";
 
@@ -16,5 +16,11 @@ export default async function HomePage({
     throw new Error("Invalid guest data received");
   }
 
-  return <HomeClient guest={guest || defaultGuest} />;
+  const messages = await listGuestMessages();
+  const listMessages = messages.filter(
+    (message) => message.greetingMessage !== null
+  );
+  console.log(listMessages);
+
+  return <HomeClient guest={guest || defaultGuest} messages={listMessages} />;
 }
