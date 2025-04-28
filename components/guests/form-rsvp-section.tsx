@@ -44,6 +44,8 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
       isRSVPed: false,
     },
   });
+  const { formState } = form;
+  const { isSubmitting } = formState;
 
   useEffect(() => {
     if (guest) {
@@ -206,7 +208,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
             className="w-full cursor-pointer"
             disabled={isSubmitted}
           >
-            Submit
+            {isSubmitting ? "Konfirmasi..." : "Konfirmasi"}
           </Button>
         </form>
       </Form>

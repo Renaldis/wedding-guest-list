@@ -12,6 +12,7 @@ import CoupleSection from "./couple-section";
 import VenueSection from "./venue-section";
 import FormRSVPSection from "./form-rsvp-section";
 import { GuestPropClient } from "@/types";
+import ListCommentSection from "./list-comment-section";
 
 export default function LandingPageGuest({
   guest,
@@ -64,6 +65,8 @@ export default function LandingPageGuest({
         <VenueSection />
         {/* Form RSVP Section */}
         <FormRSVPSection guest={guest} />
+        {/* List Comment Section */}
+        <ListCommentSection />
       </div>
     </div>
   );
