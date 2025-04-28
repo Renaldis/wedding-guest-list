@@ -221,7 +221,7 @@ export async function getGuestByCode({ rsvpCode }: { rsvpCode: string }) {
 }
 
 export async function editGuestByCode(formData: editGuestFormByCode) {
-  if (!formData.isRSVPed) {
+  if (formData.isRSVPed) {
     throw new Error(
       "Formulir dengan CODE RSVP ini hanya dapat dikonfirmasi sekali."
     );

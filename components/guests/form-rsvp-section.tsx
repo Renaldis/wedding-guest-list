@@ -29,7 +29,9 @@ import { editGuestByCode } from "@/lib/actions/guest.actions";
 
 export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [maksChar, setMaksChar] = useState<number>(0);
   const form = useForm<z.infer<typeof formSchemaRSVP>>({
     resolver: zodResolver(formSchemaRSVP),
     defaultValues: {
@@ -58,6 +60,9 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
         isRSVPed: guest.isRSVPed || false,
       });
       setIsSubmitted(guest.isRSVPed);
+    }
+    if (guest.rsvpCode) {
+      setIsDisabled(true);
     }
   }, [guest, form]);
 
@@ -96,7 +101,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
                     placeholder="Code RSVP yang sudah diberikan"
                     {...field}
                     className="bg-white"
-                    disabled={isSubmitted}
+                    disabled={isSubmitted || isDisabled}
                   />
                 </FormControl>
                 <FormMessage className="m-0" />
@@ -182,9 +187,16 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
                     {...field}
                     className="bg-white"
                     disabled={isSubmitted}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setMaksChar(e.target.value.length);
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
+                <p className="text-sm text-gray-500 block text-start">
+                  Huruf yang tersisa : {300 - maksChar} Karakter
+                </p>
               </FormItem>
             )}
           />

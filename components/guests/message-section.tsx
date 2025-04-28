@@ -8,7 +8,7 @@ import butterflyAnimation from "@/public/bird_lottie.json";
 
 export default function MessageSection() {
   return (
-    <div className="message-section p-6 text-center relative">
+    <div className="message-section p-6 2xl:px-12 text-center relative">
       <Image
         src={"/orn-header-2.webp"}
         alt="orn-header-2"
