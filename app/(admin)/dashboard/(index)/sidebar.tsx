@@ -49,7 +49,7 @@ export default function Sidebar({
   }, []);
 
   return (
-    <aside className="hidden w-64 bg-gray-800 text-white md:flex flex-col p-4 space-y-6">
+    <aside className="hidden w-64 bg-gray-800 text-white md:flex flex-col p-6 space-y-6">
       <div className="text-2xl font-bold mb-6">
         <span className="block text-center">🎉 MyWeddingApp</span>
       </div>

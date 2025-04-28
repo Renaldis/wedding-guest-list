@@ -21,20 +21,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { GuestProp } from "@/types";
-import { useEffect } from "react";
+import { GuestPropClient } from "@/types";
+import { useEffect, useState } from "react";
 import { Textarea } from "../ui/textarea";
+import { formSchemaRSVP } from "@/lib/validators";
+import { editGuestByCode } from "@/lib/actions/guest.actions";
 
-const formSchemaRSVP = z.object({
-  id: z.string(),
-  rsvpCode: z.string().nonempty({ message: "Code RSVP harus diisi." }),
-  name: z.string().nonempty({ message: "Nama lengkap harus diisi." }),
-  phone: z.string().nonempty({ message: "No HP Harus diisi." }),
-  greetingMessage: z.string().max(300, { message: "Maksimal 300 karakter" }),
-  isAttending: z.boolean(),
-});
-
-export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
+export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const form = useForm<z.infer<typeof formSchemaRSVP>>({
     resolver: zodResolver(formSchemaRSVP),
     defaultValues: {
@@ -44,6 +39,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
       phone: "",
       greetingMessage: "",
       isAttending: undefined,
+      isRSVPed: false,
     },
   });
 
@@ -59,17 +55,34 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
           guest.isAttending !== null && guest.isAttending !== undefined
             ? guest.isAttending
             : undefined,
+        isRSVPed: guest.isRSVPed || false,
       });
+      setIsSubmitted(guest.isRSVPed);
     }
   }, [guest, form]);
 
-  function onSubmit(values: z.infer<typeof formSchemaRSVP>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchemaRSVP>) {
+    try {
+      await editGuestByCode(values);
+      setIsSubmitted(true);
+      alert("success");
+    } catch (error) {
+      console.error("Error during form submission:", error);
+      setError(String(error));
+    }
   }
 
   return (
     <div className="p-6 text-center min-h-screen">
-      <h1 className="text-2xl mb-10">RSVP</h1>
+      <h1 className="text-2xl mb-5">RSVP</h1>
+      <div className="mb-6 text-sm text-gray-600">
+        <p>
+          <strong>Perhatian:</strong> Anda hanya dapat mengonfirmasi kehadiran
+          sekali. Setelah melakukan konfirmasi, Anda tidak dapat mengubah
+          pilihan kehadiran Anda. Pastikan informasi yang Anda isi sudah benar
+          sebelum menekan tombol konfirmasi.
+        </p>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
@@ -80,12 +93,13 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
                 <FormLabel>Code RSVP Anda</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Code RSVP"
+                    placeholder="Code RSVP yang sudah diberikan"
                     {...field}
                     className="bg-white"
+                    disabled={isSubmitted}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="m-0" />
               </FormItem>
             )}
           />
@@ -96,7 +110,12 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
               <FormItem>
                 <FormLabel>Nama</FormLabel>
                 <FormControl>
-                  <Input placeholder="Nama" {...field} className="bg-white" />
+                  <Input
+                    placeholder="Nama"
+                    {...field}
+                    className="bg-white"
+                    disabled={isSubmitted}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -109,13 +128,17 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
               <FormItem>
                 <FormLabel>No HP</FormLabel>
                 <FormControl>
-                  <Input placeholder="Nama" {...field} className="bg-white" />
+                  <Input
+                    placeholder="No HP"
+                    {...field}
+                    className="bg-white"
+                    disabled={isSubmitted}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
           <Controller
             control={form.control}
             name="isAttending"
@@ -132,6 +155,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
                         : "false"
                     }
                     onValueChange={(val) => field.onChange(val === "true")}
+                    disabled={isSubmitted}
                   >
                     <SelectTrigger className="w-full bg-white">
                       <SelectValue placeholder="Pilih konfirmasi" />
@@ -157,13 +181,21 @@ export default function FormRSVPSection({ guest }: { guest: GuestProp }) {
                     placeholder="Berikan Ucapan Selamat Anda"
                     {...field}
                     className="bg-white"
+                    disabled={isSubmitted}
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          {error && <p className="text-red-600">{error}</p>}
+          <Button
+            type="submit"
+            className="w-full cursor-pointer"
+            disabled={isSubmitted}
+          >
+            Submit
+          </Button>
         </form>
       </Form>
     </div>

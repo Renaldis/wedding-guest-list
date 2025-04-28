@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 export const EditGuestFormSchema = z.object({
@@ -45,4 +46,44 @@ export type createGuestForm = {
   phone: string;
   isPresent: boolean;
   updatedById: string | null;
+};
+
+// sisi tamu
+export const formSchemaRSVP = z.object({
+  id: z.string(),
+  rsvpCode: z.string().nonempty({ message: "Code RSVP harus diisi." }),
+  name: z.string().nonempty({ message: "Nama lengkap harus diisi." }),
+  phone: z
+    .string()
+    .regex(/^08[1-9][0-9]{7,10}$/, { message: "No Telpon Tidak Valid" })
+    .nonempty({ message: "wajib isi no telepon!" }),
+  greetingMessage: z.string().max(300, { message: "Maksimal 300 karakter" }),
+  isAttending: z.boolean(),
+  isRSVPed: z.boolean(),
+});
+
+export type editGuestFormByCode = {
+  id: string;
+  rsvpCode: string;
+  name: string;
+  phone: string;
+  isAttending: boolean;
+  greetingMessage: string;
+  isRSVPed: boolean;
+};
+
+export type CreateLogParams = {
+  guestId: string;
+  actorId: string;
+  actorType: "USER" | "GUEST";
+  action: string;
+  changedFields?: string[];
+  previousData?:
+    | Prisma.InputJsonValue
+    | Prisma.NullableJsonNullValueInput
+    | undefined;
+  newData?:
+    | Prisma.InputJsonValue
+    | Prisma.NullableJsonNullValueInput
+    | undefined;
 };

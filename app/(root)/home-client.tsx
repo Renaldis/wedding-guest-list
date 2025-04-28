@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { InboxArrowDownIcon } from "@heroicons/react/24/solid";
 import LandingPageGuest from "@/components/guests/landing-page";
-import { GuestProp } from "@/types";
+import { GuestPropClient } from "@/types";
 
-export default function HomeClient({ guest }: { guest: GuestProp }) {
+export default function HomeClient({ guest }: { guest: GuestPropClient }) {
   const [isOpenLP, setIsOpenLP] = useState<boolean>(false);
 
   return (

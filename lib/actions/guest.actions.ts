@@ -1,8 +1,13 @@
 "use server";
 
 import { PrismaClient, Prisma } from "@prisma/client";
-import { createGuestForm, editGuestForm } from "../validators";
+import {
+  createGuestForm,
+  editGuestForm,
+  editGuestFormByCode,
+} from "../validators";
 import { generateRsvpCode } from "../utils";
+
 const prisma = new PrismaClient();
 
 export async function getPaginatedGuest({
@@ -74,20 +79,6 @@ export async function getGuest({ id }: { id: string }) {
   return guest;
 }
 
-export async function getGuestByCode({ rsvpCode }: { rsvpCode: string }) {
-  const guest = await prisma.guest.findUnique({
-    where: {
-      rsvpCode,
-    },
-  });
-
-  if (!guest) {
-    throw new Error("Guest not found");
-  }
-
-  return guest;
-}
-
 export async function createGuest(formData: createGuestForm) {
   const existingGuest = await prisma.guest.findUnique({
     where: {
@@ -100,7 +91,6 @@ export async function createGuest(formData: createGuestForm) {
   }
 
   const totalGuests = await prisma.guest.count();
-
   const nextNumber = totalGuests + 1;
   const formattedId = `guest-${String(nextNumber).padStart(3, "0")}`;
 
@@ -110,8 +100,8 @@ export async function createGuest(formData: createGuestForm) {
       name: formData.name,
       phone: formData.phone,
       rsvpCode: generateRsvpCode(formData.name, formData.phone),
+      isAttending: null,
       isPresent: formData.isPresent,
-      createdAt: new Date(),
       updatedById: formData.updatedById,
     },
   });
@@ -213,4 +203,42 @@ export async function deleteComment(id: string) {
   });
 
   return null;
+}
+
+// SISI TAMU LANDING PAGE
+export async function getGuestByCode({ rsvpCode }: { rsvpCode: string }) {
+  const guest = await prisma.guest.findUnique({
+    where: {
+      rsvpCode,
+    },
+  });
+
+  if (!guest) {
+    throw new Error("Guest not found");
+  }
+
+  return guest;
+}
+
+export async function editGuestByCode(formData: editGuestFormByCode) {
+  if (!formData.isRSVPed) {
+    throw new Error(
+      "Formulir dengan CODE RSVP ini hanya dapat dikonfirmasi sekali."
+    );
+  }
+
+  const guest = await prisma.guest.update({
+    where: {
+      rsvpCode: formData.rsvpCode,
+    },
+    data: {
+      name: formData.name,
+      phone: formData.phone,
+      isAttending: formData.isAttending,
+      updatedAt: new Date(),
+      greetingMessage: formData.greetingMessage,
+      isRSVPed: true,
+    },
+  });
+  return guest;
 }

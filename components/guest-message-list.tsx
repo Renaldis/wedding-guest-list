@@ -42,15 +42,19 @@ export default function GuestMessageList({
     setIsOpenDelete(true);
     setSelectedGuest(id);
   };
-  return (
-    <div className="mt-10 mx-8">
-      {guests
+
+  const filteredGuests = guests
+    ? guests
         .flat()
         .filter(
           (guest) =>
             guest.greetingMessage && guest.greetingMessage.trim() !== ""
         )
-        .map((guest) => (
+    : [];
+  return (
+    <div className="mt-10 mx-8">
+      {filteredGuests.length > 0 ? (
+        filteredGuests.map((guest) => (
           <div key={guest.id} className="my-5">
             <div className="flex items-center justify-between text-sm">
               <div>
@@ -65,13 +69,14 @@ export default function GuestMessageList({
               <TrashIcon
                 className="w-6 h-6 text-red-500 cursor-pointer hover:text-red-800"
                 onClick={() => handleDelete(guest.id)}
-              >
-                Delete
-              </TrashIcon>
+              />
             </div>
             <hr className="mt-4" />
           </div>
-        ))}
+        ))
+      ) : (
+        <p className="text-center text-red-600 -mt-5">Data Belum Tersedia</p>
+      )}
       <Pagination>
         <PaginationContent>
           <PaginationItem>

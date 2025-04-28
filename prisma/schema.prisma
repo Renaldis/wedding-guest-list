@@ -12,6 +12,11 @@ enum Role {
   RESEPSIONIS
 }
 
+enum ActorType {
+  USER
+  GUEST
+}
+
 model User {
   id        String   @id @default(uuid())
   name      String
@@ -41,11 +46,14 @@ model Guest {
 }
 
 model Log {
-  id        String   @id @default(cuid())
-  guestId   String
-  guest     Guest    @relation("GuestLogs", fields: [guestId], references: [id])
-  actorId   String
-  actorType String // 'user' | 'guest'
-  action    String
-  createdAt DateTime @default(now())
+  id            String    @id @default(uuid())
+  guestId       String
+  guest         Guest     @relation("GuestLogs", fields: [guestId], references: [id])
+  actorId       String
+  actorType     ActorType
+  action        String
+  changedFields String?
+  previousData  Json?
+  newData       Json?
+  createdAt     DateTime  @default(now())
 }

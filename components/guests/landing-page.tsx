@@ -11,9 +11,13 @@ import MessageSection from "./message-section";
 import CoupleSection from "./couple-section";
 import VenueSection from "./venue-section";
 import FormRSVPSection from "./form-rsvp-section";
-import { GuestProp } from "@/types";
+import { GuestPropClient } from "@/types";
 
-export default function LandingPageGuest({ guest }: { guest: GuestProp }) {
+export default function LandingPageGuest({
+  guest,
+}: {
+  guest: GuestPropClient;
+}) {
   return (
     <div className="grid lg:grid-cols-3 overflow-y-auto">
       <div className="hidden col-span-2 lg:block">

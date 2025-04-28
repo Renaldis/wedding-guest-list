@@ -25,6 +25,18 @@ export type GuestProp = {
   isPresent?: boolean;
   greetingMessage?: string | null;
   updatedById?: string | null;
-  updatedAt?: Date;
-  createdAt?: Date;
+  updatedAt: Date;
+  createdAt: Date;
+};
+
+export type GuestPropClient = {
+  id: string;
+  name: string;
+  phone: string | null;
+  rsvpCode: string;
+  isRSVPed: boolean;
+  isAttending: boolean | null;
+  isPresent?: boolean;
+  greetingMessage?: string | null;
+  updatedById?: string | null;
 };
