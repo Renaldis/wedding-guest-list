@@ -245,7 +245,7 @@ export async function editGuestByCode(formData: editGuestFormByCode) {
 
 export async function listGuestMessages() {
   const messages = await prisma.guest.findMany({
-    orderBy: { createdAt: "asc" },
+    orderBy: { createdAt: "desc" },
   });
 
   return messages;
