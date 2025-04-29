@@ -8,7 +8,7 @@ export default function ListCommentSection({
   messages: GuestPropClient[];
 }) {
   return (
-    <section className="px-8 py-6">
+    <section className="px-8 py-3 md:py-6 pb-28">
       <div className="h-[450px] bg-gray-200 flex flex-col">
         <div className="bg-pink-600 text-white p-4 rounded-t-md">
           <h3 className="text-center text-lg">Ucapan Selamat</h3>
