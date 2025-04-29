@@ -8,7 +8,7 @@ export const metadata = {
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: Record<string, string>;
+  searchParams: Promise<{ page: string; search: string; limit: string }>;
 }) {
   const params = await searchParams;
 

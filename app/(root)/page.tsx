@@ -5,7 +5,7 @@ import { defaultGuest } from "@/lib/constants";
 export default async function HomePage({
   searchParams,
 }: {
-  searchParams: Record<string, string>;
+  searchParams: Promise<{ codeRSVP: string }>;
 }) {
   const params = await searchParams;
   const guest = params.codeRSVP
@@ -20,7 +20,6 @@ export default async function HomePage({
   const listMessages = messages.filter(
     (message) => message.greetingMessage !== null
   );
-  console.log(listMessages);
 
   return <HomeClient guest={guest || defaultGuest} messages={listMessages} />;
 }

@@ -4,9 +4,11 @@ import { getGuest } from "@/lib/actions/guest.actions";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const guest = await getGuest({ id: params.id });
+  const { id } = await params;
+
+  const guest = await getGuest({ id });
 
   if (!guest) {
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
@@ -14,14 +16,3 @@ export async function GET(
 
   return NextResponse.json(guest);
 }
-
-// export async function POST(req: Request) {
-//   const formData: updateGuest = await req.json();
-//   const guest = await editGuest(formData);
-
-//   if (!guest) {
-//     return NextResponse.json({ error: "update error" }, { status: 500 });
-//   }
-
-//   return NextResponse.json({ message: "Guest updated successfully", guest });
-// }
