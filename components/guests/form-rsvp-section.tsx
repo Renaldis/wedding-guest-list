@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -146,7 +146,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
               </FormItem>
             )}
           />
-          <Controller
+          <FormField
             control={form.control}
             name="isAttending"
             render={({ field }) => (
@@ -177,6 +177,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="greetingMessage"
