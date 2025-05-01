@@ -12,11 +12,6 @@ enum Role {
   RESEPSIONIS
 }
 
-enum ActorType {
-  USER
-  GUEST
-}
-
 model User {
   id        String   @id @default(uuid())
   name      String
