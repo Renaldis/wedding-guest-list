@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 export const EditGuestFormSchema = z.object({
@@ -74,20 +73,4 @@ export type editGuestFormByCode = {
     message: string | null;
   };
   isRSVPed: boolean;
-};
-
-export type CreateLogParams = {
-  guestId: string;
-  actorId: string;
-  actorType: "USER" | "GUEST";
-  action: string;
-  changedFields?: string[];
-  previousData?:
-    | Prisma.InputJsonValue
-    | Prisma.NullableJsonNullValueInput
-    | undefined;
-  newData?:
-    | Prisma.InputJsonValue
-    | Prisma.NullableJsonNullValueInput
-    | undefined;
 };

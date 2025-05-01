@@ -106,10 +106,27 @@ export async function createGuest(formData: createGuestForm) {
     },
   });
 
+  // Buat entri log
+  await prisma.log.create({
+    data: {
+      userId: formData.updatedById,
+      action: `${formData.updatedById} membuat tamu baru ${guest.id}`,
+      guestId: guest.id,
+    },
+  });
+
   return guest;
 }
 
 export async function editGuest(formData: editGuestForm) {
+  const existingGuest = await prisma.guest.findUnique({
+    where: { id: formData.id },
+  });
+
+  if (!existingGuest) {
+    throw new Error("Guest not found");
+  }
+
   const guest = await prisma.guest.update({
     where: {
       id: formData.id,
@@ -122,16 +139,61 @@ export async function editGuest(formData: editGuestForm) {
       updatedById: formData.updatedById,
     },
   });
+
+  // Buat pesan log yang deskriptif
+  const changes: string[] = [];
+  if (formData.name && formData.name !== existingGuest.name) {
+    changes.push(`Name changed from ${existingGuest.name} to ${formData.name}`);
+  }
+  if (formData.phone && formData.phone !== existingGuest.phone) {
+    changes.push(
+      `Phone changed from ${existingGuest.phone} to ${formData.phone}`
+    );
+  }
+  if (
+    formData.isPresent !== undefined &&
+    formData.isPresent !== existingGuest.isPresent
+  ) {
+    changes.push(
+      `Presence changed from ${existingGuest.isPresent} to ${formData.isPresent}`
+    );
+  }
+  const actionDescription =
+    changes.length > 0 ? changes.join(", ") : "No changes made";
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: formData.updatedById ?? undefined,
+    },
+  });
+
+  // Buat entri log
+  await prisma.log.create({
+    data: {
+      userId: user?.id,
+      action: `${user?.id} mengubah data tamu: ${actionDescription}`,
+      guestId: guest.id,
+    },
+  });
+
   return guest;
 }
 
-export async function deleteGuest(id: string) {
+export async function deleteGuest(id: string, userId: string) {
   await prisma.guest.update({
     where: {
       id,
     },
     data: {
       isDeleted: true,
+    },
+  });
+
+  await prisma.log.create({
+    data: {
+      userId,
+      action: `${userId} menghapus tamu ${id}`,
+      guestId: id,
     },
   });
 }
@@ -146,6 +208,7 @@ export async function getGuestByCode({ rsvpCode }: { rsvpCode: string }) {
   if (!guest) {
     throw new Error("Guest not found");
   }
+
   const comment = await prisma.guestComment.findFirst({
     where: {
       guestId: guest?.id,
@@ -162,6 +225,14 @@ export async function getGuestByCode({ rsvpCode }: { rsvpCode: string }) {
 }
 
 export async function editGuestByCode(formData: editGuestFormByCode) {
+  const existingGuest = await prisma.guest.findUnique({
+    where: { id: formData.id },
+  });
+
+  if (!existingGuest) {
+    throw new Error("Guest not found");
+  }
+
   if (formData.isRSVPed) {
     throw new Error(
       "Formulir dengan CODE RSVP ini hanya dapat dikonfirmasi sekali."
@@ -184,6 +255,35 @@ export async function editGuestByCode(formData: editGuestFormByCode) {
   const guestMessage = await prisma.guestComment.create({
     data: {
       message: formData.GuestComment?.message,
+      guestId: guest.id,
+    },
+  });
+
+  // Buat pesan log yang deskriptif
+  const changes: string[] = [];
+  if (formData.name && formData.name !== existingGuest.name) {
+    changes.push(`Name changed from ${existingGuest.name} to ${formData.name}`);
+  }
+  if (formData.phone && formData.phone !== existingGuest.phone) {
+    changes.push(
+      `Phone changed from ${existingGuest.phone} to ${formData.phone}`
+    );
+  }
+  if (
+    formData.isAttending !== undefined &&
+    formData.isAttending !== existingGuest.isAttending
+  ) {
+    changes.push(
+      `isAttending changed from ${existingGuest.isAttending} to ${formData.isAttending}`
+    );
+  }
+  const actionDescription =
+    changes.length > 0 ? changes.join(", ") : "No changes made";
+
+  // Buat entri log
+  await prisma.log.create({
+    data: {
+      action: `${guest.id} Konfirmasi RSVP: ${actionDescription}`,
       guestId: guest.id,
     },
   });

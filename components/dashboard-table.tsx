@@ -137,7 +137,7 @@ export default function DashboardTable({
 
   const confirmDelete = async () => {
     if (selectedGuest) {
-      await deleteGuest(selectedGuest);
+      await deleteGuest(selectedGuest, userId);
       router.refresh();
       setIsOpenDelete(false);
     }

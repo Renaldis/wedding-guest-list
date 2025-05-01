@@ -41,7 +41,6 @@ model Guest {
   isRSVPed     Boolean        @default(false)
   phone        String?        @unique
   updatedBy    User?          @relation("UpdatedBy", fields: [updatedById], references: [id])
-  Log          Log[]          @relation("GuestLogs")
   GuestComment GuestComment[]
 }
 
@@ -56,14 +55,9 @@ model GuestComment {
 }
 
 model Log {
-  id            String    @id @default(uuid())
-  guestId       String
-  guest         Guest     @relation("GuestLogs", fields: [guestId], references: [id])
-  actorId       String
-  actorType     ActorType
-  action        String
-  changedFields String?
-  previousData  Json?
-  newData       Json?
-  createdAt     DateTime  @default(now())
+  id        String   @id @default(uuid())
+  action    String
+  guestId   String?
+  userId    String?
+  createdAt DateTime @default(now())
 }
