@@ -5,8 +5,8 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 import arrowDownAnimation from "@/public/arrow-down.json";
 import CountdownTimer from "./features/countdown-timer";
-import { Button } from "../ui/button";
-import { CalendarDaysIcon } from "@heroicons/react/24/solid";
+
+import SaveToCalendarButton from "./features/saveToCalendarButton";
 
 export default function HeroSection() {
   return (
@@ -26,10 +26,7 @@ export default function HeroSection() {
       </div>
       <div className="mt-10 flex flex-col gap-5 2xl:gap-10">
         <CountdownTimer />
-        <Button className="bg-pink-700 rounded-full cursor-pointer py-2 px-4 flex items-center justify-center mt-4">
-          <CalendarDaysIcon className="w-4 h-4" />
-          Simpan Tanggal
-        </Button>
+        <SaveToCalendarButton />
       </div>
     </div>
   );

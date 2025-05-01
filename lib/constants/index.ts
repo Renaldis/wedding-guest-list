@@ -72,3 +72,10 @@ export const defaultGuest = {
   isPresent: false,
   updatedById: null,
 };
+
+export const eventTitle = "Acara Pernikahan Fiqri & Meiliza";
+export const eventStartDate = "20250528T020000Z";
+export const eventEndDate = "20250528T040000Z";
+export const eventDetails = "Jangan lupa hadir di acara pernikahan kami!";
+export const eventLocation =
+  "The St. Regis Jakarta Jalan Haji R. Rasuna Said 4, Setia Budi, Kecamatan Setiabudi Kota Jakarta Selatan";
