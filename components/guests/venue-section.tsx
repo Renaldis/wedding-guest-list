@@ -9,31 +9,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
-import LocIcon from "@/public/location-lordicon.gif";
+
 import Image from "next/image";
+import { venues } from "@/lib/constants";
+import LocIcon from "@/public/location-lordicon.gif";
 
 export default function VenueSection() {
-  const venues = [
-    {
-      title: "Akad Nikah",
-      date: "21 Januari 2026",
-      time: "09:30 - 11:00",
-      place: "The St. Regis Jakarta",
-      address:
-        "Jalan Haji R. Rasuna Said 4, Setia Budi, Kecamatan Setiabudi Kota Jakarta Selatan",
-      icon: LocIcon,
-    },
-    {
-      title: "Resepsi Pernikahan",
-      date: "21 Januari 2026",
-      time: "12:00 - 14:30 WIB",
-      place: "The St. Regis Jakarta",
-      address:
-        "Jalan Haji R. Rasuna Said 4, Setia Budi, Kecamatan Setiabudi Kota Jakarta Selatan",
-      icon: LocIcon,
-    },
-  ];
-
   return (
     <div className="p-6 text-center min-h-screen">
       <h1 className="text-2xl mb-15">Acara</h1>
@@ -56,8 +37,9 @@ export default function VenueSection() {
                 <Button
                   variant={"outline"}
                   className="rounded-full text-slate-700 border-slate-700 cursor-pointer"
+                  onClick={() => window.open(venue.mapUrl, "_blank")}
                 >
-                  Lokasi
+                  Lihat Lokasi
                 </Button>
               </CardFooter>
 
