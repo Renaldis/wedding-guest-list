@@ -18,14 +18,14 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-import { Input } from "./ui/input";
+import { Input } from "../ui/input";
 import { format } from "date-fns";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 
-import { Button } from "./ui/button";
-import CustomDialog from "./custom-dialog";
+import { Button } from "../ui/button";
+import CustomDialog from "../custom-dialog";
 
 import { EditGuestFormSchema, editGuestForm } from "@/lib/validators";
 import { z } from "zod";
@@ -38,9 +38,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Label } from "./ui/label";
+} from "../ui/form";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { Label } from "../ui/label";
 import { deleteGuest, editGuest } from "@/lib/actions/guest.actions";
 import Cookies from "js-cookie";
 

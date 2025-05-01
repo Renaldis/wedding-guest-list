@@ -1,4 +1,6 @@
-import DashboardTable from "@/components/dashboard-table";
+import DashboardTable from "@/components/dashboard/dashboard-table";
+import StatCard from "@/components/dashboard/features/stat-card";
+import { totalGuest } from "@/lib/actions/features/guestStat.actions";
 import { getPaginatedGuest } from "@/lib/actions/guest.actions";
 
 export const metadata = {
@@ -24,9 +26,11 @@ export default async function DashboardPage({
     search,
   });
 
+  const statData = await totalGuest();
+
   return (
-    <div className="">
-      <h1>Ini Nanti Adalah Statistik Kehadiran</h1>
+    <div className="pb-10">
+      <StatCard statData={statData} />
       <br />
       <DashboardTable guests={guests} totalPages={totalPages} />
     </div>

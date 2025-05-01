@@ -1,0 +1,70 @@
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  UserGroupIcon,
+  DocumentCheckIcon,
+  HandThumbUpIcon,
+} from "@heroicons/react/24/solid";
+
+type StatData = {
+  totalGuest: number;
+  totalConfirmRSVP: number;
+  totalPresent: number;
+  totalAttending: number;
+};
+
+export default function StatCard({ statData }: { statData: StatData }) {
+  const data = [
+    {
+      icon: UserGroupIcon,
+      title: "Jumlah Tamu",
+      value: statData.totalGuest,
+      bg_color: "bg-sky-200",
+    },
+    {
+      icon: DocumentCheckIcon,
+      title: "Konfirmasi RSVP",
+      value: statData.totalConfirmRSVP,
+      bg_color: "bg-yellow-100",
+    },
+    {
+      icon: HandThumbUpIcon,
+      title: "Tamu Sudah Hadir",
+      value: statData.totalPresent,
+      bg_color: "bg-green-200",
+    },
+  ];
+  return (
+    <>
+      {data.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {data.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <Card
+                className={`shadow-lg rounded-lg ${item.bg_color} relative`}
+                key={idx}
+              >
+                <CardHeader className="flex items-center justify-center">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white shadow-md absolute -top-4">
+                    <Icon className="w-6 h-6 text-gray-700" />
+                  </div>
+
+                  <p className="text-sm font-semibold text-gray-800">
+                    {item.title}
+                  </p>
+                </CardHeader>
+                <CardContent className="flex justify-center items-center">
+                  <p className="font-medium text-xl text-gray-900">
+                    {item.value}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="text-center text-gray-500">No Data</div>
+      )}
+    </>
+  );
+}

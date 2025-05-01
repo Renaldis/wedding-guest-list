@@ -1,4 +1,4 @@
-import GuestMessageList from "@/components/guest-message-list";
+import GuestMessageList from "@/components/dashboard/guest-message-list";
 import { guestsMessage } from "@/lib/actions/guestComment.actions";
 
 export const metadata = {

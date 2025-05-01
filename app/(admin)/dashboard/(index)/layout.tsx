@@ -13,14 +13,14 @@ export default function DashboardLayout({
 
   const toggleSheet = () => setIsSheetOpen((prev) => !prev);
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen">
       {/* Sidebar */}
       <Sidebar isSheetOpen={isSheetOpen} toggleSheet={toggleSheet} />
       {/* Main Content Area */}
       <main className="flex-1 bg-gray-100 w-100 overflow-x-hidden">
         <Navbar toggleSheet={toggleSheet} />
 
-        <div className="p-6 h-screen overflow-y-auto pb-40">{children}</div>
+        <div className="p-6 h-screen pb-40">{children}</div>
       </main>
     </div>
   );

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/pagination";
 import { format } from "date-fns";
 import { useSearchParams, useRouter } from "next/navigation";
-import CustomDialog from "./custom-dialog";
+import CustomDialog from "../custom-dialog";
 import { useState } from "react";
 
 import { TrashIcon } from "@heroicons/react/24/solid";

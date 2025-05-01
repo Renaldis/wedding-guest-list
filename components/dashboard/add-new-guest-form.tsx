@@ -15,11 +15,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { CreateNewGuestSchema } from "@/lib/validators";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Label } from "./ui/label";
+
 import { useEffect, useState, useTransition } from "react";
 import { createGuest } from "@/lib/actions/guest.actions";
 import Cookies from "js-cookie";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { Label } from "../ui/label";
 
 export default function AddNewGuestForm() {
   const [userId, setUserId] = useState("");
