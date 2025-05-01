@@ -18,10 +18,10 @@ export default function UserSection({
   return (
     <div className="space-y-4 mb-10">
       <h2 className="text-xl font-semibold">{title}</h2>
-      <div className="space-y-4 w-[400px] flex">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {users.map((user) => {
           return (
-            <Card className="w-full shadow-md" key={user.id}>
+            <Card className="shadow-md flex-1/2" key={user.id}>
               <CardContent className="p-4 flex justify-between items-center">
                 <div>
                   <p className="font-semibold">{user.name}</p>
@@ -37,6 +37,7 @@ export default function UserSection({
                     <Button
                       variant="outline"
                       onClick={() => onPromote(user.id)}
+                      className="cursor-pointer"
                     >
                       Jadikan Admin
                     </Button>
@@ -44,6 +45,7 @@ export default function UserSection({
                   <Button
                     variant="destructive"
                     onClick={() => onDelete(user.id)}
+                    className="cursor-pointer"
                   >
                     Hapus
                   </Button>
