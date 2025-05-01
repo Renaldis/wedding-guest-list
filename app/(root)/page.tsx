@@ -1,6 +1,7 @@
-import { getGuestByCode, listGuestMessages } from "@/lib/actions/guest.actions";
+import { getGuestByCode } from "@/lib/actions/guest.actions";
 import HomeClient from "./home-client";
 import { defaultGuest } from "@/lib/constants";
+import { listGuestMessages } from "@/lib/actions/guestComment.actions";
 
 export default async function HomePage({
   searchParams,
@@ -17,9 +18,7 @@ export default async function HomePage({
   }
 
   const messages = await listGuestMessages();
-  const listMessages = messages.filter(
-    (message) => message.greetingMessage !== null
-  );
+  const listMessages = messages.filter((message) => message.message !== null);
 
   return <HomeClient guest={guest || defaultGuest} messages={listMessages} />;
 }

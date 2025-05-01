@@ -136,75 +136,6 @@ export async function deleteGuest(id: string) {
   });
 }
 
-export async function guestsMessage({
-  page = 1,
-  limit = 10,
-  sortBy = "createdAt",
-  sortOrder = "desc",
-  search = "",
-}: {
-  page?: number;
-  limit?: number;
-  sortBy?: string;
-  sortOrder?: "asc" | "desc";
-  search?: string;
-}) {
-  const skip = (page - 1) * limit;
-
-  const whereClause: Prisma.GuestWhereInput = {
-    isDeleted: false,
-    greetingMessage: {
-      not: null,
-    },
-    ...(search && {
-      OR: [
-        {
-          name: {
-            contains: search,
-            mode: Prisma.QueryMode.insensitive,
-          },
-        },
-        {
-          phone: {
-            contains: search,
-          },
-        },
-      ],
-    }),
-  };
-
-  const guests = await prisma.guest.findMany({
-    where: whereClause,
-    orderBy: {
-      [sortBy]: sortOrder,
-    },
-    skip,
-    take: limit,
-  });
-
-  const total = await prisma.guest.count({
-    where: whereClause,
-  });
-
-  return {
-    guests,
-    total,
-    page,
-    totalPages: Math.ceil(total / limit),
-  };
-}
-
-export async function deleteComment(id: string) {
-  await prisma.guest.update({
-    where: { id },
-    data: {
-      greetingMessage: null,
-    },
-  });
-
-  return null;
-}
-
 // SISI TAMU LANDING PAGE
 export async function getGuestByCode({ rsvpCode }: { rsvpCode: string }) {
   const guest = await prisma.guest.findUnique({
@@ -212,12 +143,22 @@ export async function getGuestByCode({ rsvpCode }: { rsvpCode: string }) {
       rsvpCode,
     },
   });
-
   if (!guest) {
     throw new Error("Guest not found");
   }
+  const comment = await prisma.guestComment.findFirst({
+    where: {
+      guestId: guest?.id,
+    },
+    select: {
+      message: true,
+    },
+  });
 
-  return guest;
+  return {
+    ...guest,
+    GuestComment: comment ? { message: comment.message } : undefined,
+  };
 }
 
 export async function editGuestByCode(formData: editGuestFormByCode) {
@@ -236,17 +177,16 @@ export async function editGuestByCode(formData: editGuestFormByCode) {
       phone: formData.phone,
       isAttending: formData.isAttending,
       updatedAt: new Date(),
-      greetingMessage: formData.greetingMessage,
       isRSVPed: true,
     },
   });
-  return guest;
-}
 
-export async function listGuestMessages() {
-  const messages = await prisma.guest.findMany({
-    orderBy: { createdAt: "desc" },
+  const guestMessage = await prisma.guestComment.create({
+    data: {
+      message: formData.GuestComment?.message,
+      guestId: guest.id,
+    },
   });
 
-  return messages;
+  return { guest, guestMessage };
 }

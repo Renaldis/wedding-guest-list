@@ -1,6 +1,6 @@
 "use client";
 
-import { GuestProp } from "@/types";
+import { GuestComment } from "@/types";
 import {
   Pagination,
   PaginationContent,
@@ -13,14 +13,15 @@ import { format } from "date-fns";
 import { useSearchParams, useRouter } from "next/navigation";
 import CustomDialog from "./custom-dialog";
 import { useState } from "react";
-import { deleteComment } from "@/lib/actions/guest.actions";
+
 import { TrashIcon } from "@heroicons/react/24/solid";
+import { deleteComment } from "@/lib/actions/guestComment.actions";
 
 export default function GuestMessageList({
   guests,
   totalPages,
 }: {
-  guests: GuestProp[];
+  guests: GuestComment[];
   totalPages: number;
 }) {
   const searchParams = useSearchParams();
@@ -46,10 +47,7 @@ export default function GuestMessageList({
   const filteredGuests = guests
     ? guests
         .flat()
-        .filter(
-          (guest) =>
-            guest.greetingMessage && guest.greetingMessage.trim() !== ""
-        )
+        .filter((guest) => guest.message && guest.message.trim() !== "")
     : [];
   return (
     <div className="mt-10 mx-8">
@@ -58,9 +56,9 @@ export default function GuestMessageList({
           <div key={guest.id} className="my-5">
             <div className="flex items-center justify-between text-sm">
               <div>
-                <h1 className="text-black font-medium">{guest.name}</h1>
+                <h1 className="text-black font-medium">{guest.guest?.name}</h1>
                 <div className="flex items-center gap-4">
-                  <p className="text-slate-600">{guest.greetingMessage}</p>
+                  <p className="text-slate-600">{guest.message}</p>
                   <p className="text-slate-400">
                     {format(new Date(guest.createdAt), "yyyy-MM-dd HH:mm:ss")}
                   </p>

@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+
 import {
   Form,
   FormControl,
@@ -28,10 +30,12 @@ import { formSchemaRSVP } from "@/lib/validators";
 import { editGuestByCode } from "@/lib/actions/guest.actions";
 
 export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
+  const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [maksChar, setMaksChar] = useState<number>(0);
+
   const form = useForm<z.infer<typeof formSchemaRSVP>>({
     resolver: zodResolver(formSchemaRSVP),
     defaultValues: {
@@ -39,7 +43,9 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
       name: "",
       rsvpCode: "",
       phone: "",
-      greetingMessage: "",
+      GuestComment: {
+        message: "",
+      },
       isAttending: undefined,
       isRSVPed: false,
     },
@@ -54,7 +60,9 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
         name: guest.name || "",
         rsvpCode: guest.rsvpCode || "",
         phone: guest.phone || "",
-        greetingMessage: guest.greetingMessage || "",
+        GuestComment: {
+          message: guest.GuestComment?.message || "",
+        },
         isAttending:
           guest.isAttending !== null && guest.isAttending !== undefined
             ? guest.isAttending
@@ -73,6 +81,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
       await editGuestByCode(values);
       setIsSubmitted(true);
       alert("success");
+      router.refresh();
     } catch (error) {
       console.error("Error during form submission:", error);
       setError(String(error));
@@ -80,7 +89,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
   }
 
   return (
-    <div className="p-6 text-center min-h-screen">
+    <div className="p-6 text-center">
       <h1 className="text-2xl mb-5">RSVP</h1>
       <div className="mb-6 text-sm text-gray-600">
         <p>
@@ -180,7 +189,7 @@ export default function FormRSVPSection({ guest }: { guest: GuestPropClient }) {
 
           <FormField
             control={form.control}
-            name="greetingMessage"
+            name="GuestComment.message"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Ucapan Selamat</FormLabel>

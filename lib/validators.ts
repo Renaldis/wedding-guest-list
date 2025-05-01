@@ -57,7 +57,9 @@ export const formSchemaRSVP = z.object({
     .string()
     .regex(/^08[1-9][0-9]{7,10}$/, { message: "No Telpon Tidak Valid" })
     .nonempty({ message: "wajib isi no telepon!" }),
-  greetingMessage: z.string().max(300, { message: "Maksimal 300 karakter" }),
+  GuestComment: z.object({
+    message: z.string().max(300, { message: "Maksimal 300 karakter" }),
+  }),
   isAttending: z.boolean(),
   isRSVPed: z.boolean(),
 });
@@ -68,7 +70,9 @@ export type editGuestFormByCode = {
   name: string;
   phone: string;
   isAttending: boolean;
-  greetingMessage: string;
+  GuestComment?: {
+    message: string | null;
+  };
   isRSVPed: boolean;
 };
 

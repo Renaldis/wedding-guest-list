@@ -1,5 +1,5 @@
 import GuestMessageList from "@/components/guest-message-list";
-import { guestsMessage } from "@/lib/actions/guest.actions";
+import { guestsMessage } from "@/lib/actions/guestComment.actions";
 
 export const metadata = {
   title: "Ucapan Selamat",

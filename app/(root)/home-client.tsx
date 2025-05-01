@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { InboxArrowDownIcon } from "@heroicons/react/24/solid";
 import LandingPageGuest from "@/components/guests/landing-page";
-import { GuestPropClient } from "@/types";
+import { GuestComment, GuestPropClient } from "@/types";
 
 export default function HomeClient({
   guest,
   messages,
 }: {
   guest: GuestPropClient;
-  messages: GuestPropClient[];
+  messages: GuestComment[];
 }) {
   const [isOpenLP, setIsOpenLP] = useState<boolean>(false);
 

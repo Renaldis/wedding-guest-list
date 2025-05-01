@@ -27,7 +27,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Budi Santoso", "08123456789"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-002",
@@ -36,7 +35,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Siti Aminah", "08987654321"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-003",
@@ -45,7 +43,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Joko Suwiarto", "08955654321"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-004",
@@ -54,7 +51,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Ani Wijaya", "08111222333"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-005",
@@ -63,7 +59,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Rudi Hartono", "08223344556"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-006",
@@ -72,7 +67,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Yuni Kartika", "08312355667"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-007",
@@ -81,7 +75,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Andi Pratama", "08445566422"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-008",
@@ -90,7 +83,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Dina Sari", "08333677889"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-009",
@@ -99,7 +91,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Eko Nugroho", "08667745690"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-010",
@@ -108,7 +99,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Fitri Maulida", "08668899001"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-011",
@@ -117,7 +107,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Hasan Albar", "08786900112"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-012",
@@ -126,7 +115,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Nina Larasati", "08112233445"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-013",
@@ -135,7 +123,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Galih Prakoso", "08223214556"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-014",
@@ -144,7 +131,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Intan Permata", "08334455667"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-015",
@@ -153,7 +139,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Rizky Hidayat", "08445566778"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-016",
@@ -162,7 +147,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Mega Ayu", "08556677889"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-017",
@@ -171,7 +155,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Bayu Saputra", "08667788990"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-018",
@@ -180,7 +163,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Lia Marlina", "08778899001"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-019",
@@ -189,7 +171,6 @@ export const guests = [
     rsvpCode: generateRsvpCode("Fajar Nugraha", "08889900112"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
   {
     id: "guest-020",
@@ -198,6 +179,5 @@ export const guests = [
     rsvpCode: generateRsvpCode("Tari Ramadhani", "08990011223"),
     isRSVPed: false,
     isAttending: null,
-    greetingMessage: null,
   },
 ];

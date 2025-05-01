@@ -29,20 +29,30 @@ model User {
 }
 
 model Guest {
-  id              String   @id @default(uuid())
-  name            String
-  rsvpCode        String   @unique
-  isAttending     Boolean? @default(false)
-  isPresent       Boolean  @default(false)
-  isDeleted       Boolean  @default(false)
-  greetingMessage String?
-  updatedById     String?
-  updatedAt       DateTime @updatedAt
-  createdAt       DateTime @default(now())
-  isRSVPed        Boolean  @default(false)
-  phone           String?  @unique
-  updatedBy       User?    @relation("UpdatedBy", fields: [updatedById], references: [id])
-  Log             Log[]    @relation("GuestLogs")
+  id           String         @id @default(uuid())
+  name         String
+  rsvpCode     String         @unique
+  isAttending  Boolean?       @default(false)
+  isPresent    Boolean        @default(false)
+  isDeleted    Boolean        @default(false)
+  updatedById  String?
+  updatedAt    DateTime       @updatedAt
+  createdAt    DateTime       @default(now())
+  isRSVPed     Boolean        @default(false)
+  phone        String?        @unique
+  updatedBy    User?          @relation("UpdatedBy", fields: [updatedById], references: [id])
+  Log          Log[]          @relation("GuestLogs")
+  GuestComment GuestComment[]
+}
+
+model GuestComment {
+  id        String   @id @default(uuid())
+  guest     Guest?   @relation(fields: [guestId], references: [id])
+  guestId   String?
+  message   String?
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Log {
