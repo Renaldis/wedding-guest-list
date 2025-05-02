@@ -22,7 +22,7 @@ export const EditUserFormSchema = z.object({
     .max(50, { message: "Maks 50 karakter." })
     .nonempty({ message: "Nama harus diisi!" }),
   email: z.string().nonempty({ message: "wajib isi no telepon!" }),
-  password: z.string().nonempty(),
+  password: z.string(),
 });
 
 export type editGuestForm = {

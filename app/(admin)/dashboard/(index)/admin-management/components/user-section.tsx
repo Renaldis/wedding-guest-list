@@ -1,7 +1,9 @@
+import { mutate } from "swr";
 import { UserForm, Users } from "@/types/user";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import CustomDialog from "@/components/custom-dialog";
+
 import {
   Form,
   FormControl,
@@ -15,13 +17,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { EditUserFormSchema } from "@/lib/validators";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   PencilSquareIcon,
   TrashIcon,
   UserPlusIcon,
   UserMinusIcon,
 } from "@heroicons/react/24/solid";
+import axios from "axios";
 
 type Props = {
   title: string;
@@ -48,16 +51,50 @@ export default function UserSection({
     },
   });
 
+  const [user, setUsers] = useState<Users>();
   const [openForm, setOpenForm] = useState<boolean>(false);
+  const [isOpenPassword, setIsOpenPassword] = useState<boolean>(false);
 
-  const handleEdit = () => {
+  const handleEdit = async (id: string) => {
+    const user = await axios.get(`/api/users/${id}`);
+
+    setUsers(user.data);
     setOpenForm(true);
   };
 
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        password: "",
+      });
+    }
+  }, [user, form]);
+
   const onSubmit = async (data: UserForm) => {
-    console.log(data);
+    try {
+      const response = await axios.patch(`/api/users/${data.id}`, {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      });
+      mutate("/api/users");
+      console.log("User updated:", response.data);
+    } catch (error) {
+      console.error("Update failed:", error);
+    }
+
+    setOpenForm(false);
+    setIsOpenPassword(false);
   };
 
+  useEffect(() => {
+    if (!openForm) {
+      setIsOpenPassword(false);
+    }
+  }, [openForm]);
   return (
     <div className="space-y-4 mb-10">
       <h2 className="text-xl font-semibold">{title}</h2>
@@ -77,7 +114,7 @@ export default function UserSection({
                 </div>
                 <div className="space-x-2 flex flex-col gap-2">
                   <PencilSquareIcon
-                    onClick={handleEdit}
+                    onClick={() => handleEdit(user.id)}
                     className="w-6 h-6 cursor-pointer"
                   />
 
@@ -129,20 +166,38 @@ export default function UserSection({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>email</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="No Hp" {...field} type="number" />
+                    <Input placeholder="Email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            {isOpenPassword ? (
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>New Password</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : (
+              <p
+                className="text-sm text-red-600 cursor-pointer hover:text-red-800"
+                onClick={() => setIsOpenPassword(true)}
+              >
+                Change Password?
+              </p>
+            )}
 
-            <Button
-              type="submit"
-              className="w-full cursor-pointer"
-              onClick={() => setOpenForm(false)}
-            >
+            <Button type="submit" className="w-full cursor-pointer">
               Submit
             </Button>
           </form>

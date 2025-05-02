@@ -12,7 +12,6 @@ export default function AdminManagementPage() {
 
   if (!users && !error) return <div>Loading...</div>;
   if (error) return <div>Error loading users: {error.message}</div>;
-  console.log(users);
 
   const handleDelete = (id: string) => {
     console.log("Delete user id:", id);
