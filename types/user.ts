@@ -9,3 +9,10 @@ export type Users = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type UserForm = {
+  id: string;
+  name: string;
+  email?: string;
+  password?: string;
+};

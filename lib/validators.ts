@@ -14,6 +14,16 @@ export const EditGuestFormSchema = z.object({
   isPresent: z.boolean(),
   updatedById: z.string().nullable(),
 });
+export const EditUserFormSchema = z.object({
+  id: z.string(),
+  name: z
+    .string()
+    .min(3, { message: "Min 3 karakter." })
+    .max(50, { message: "Maks 50 karakter." })
+    .nonempty({ message: "Nama harus diisi!" }),
+  email: z.string().nonempty({ message: "wajib isi no telepon!" }),
+  password: z.string().nonempty(),
+});
 
 export type editGuestForm = {
   id: string;

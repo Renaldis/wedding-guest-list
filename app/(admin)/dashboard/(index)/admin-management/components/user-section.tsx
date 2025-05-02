@@ -1,6 +1,26 @@
-import { Users } from "@/types/user";
+import { UserForm, Users } from "@/types/user";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import CustomDialog from "@/components/custom-dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { EditUserFormSchema } from "@/lib/validators";
+import { useState } from "react";
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  UserPlusIcon,
+} from "@heroicons/react/24/solid";
 
 type Props = {
   title: string;
@@ -15,6 +35,26 @@ export default function UserSection({
   onDelete,
   onPromote,
 }: Props) {
+  const form = useForm<z.infer<typeof EditUserFormSchema>>({
+    resolver: zodResolver(EditUserFormSchema),
+    defaultValues: {
+      id: "",
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  const [openForm, setOpenForm] = useState<boolean>(false);
+
+  const handleEdit = () => {
+    setOpenForm(true);
+  };
+
+  const onSubmit = async (data: UserForm) => {
+    console.log(data);
+  };
+
   return (
     <div className="space-y-4 mb-10">
       <h2 className="text-xl font-semibold">{title}</h2>
@@ -32,29 +72,73 @@ export default function UserSection({
                     </span>
                   </p>
                 </div>
-                <div className="space-x-2">
-                  {user.role === "RESEPSIONIS" && onPromote && (
-                    <Button
-                      variant="outline"
-                      onClick={() => onPromote(user.id)}
-                      className="cursor-pointer"
-                    >
-                      Jadikan Admin
-                    </Button>
-                  )}
-                  <Button
-                    variant="destructive"
+                <div className="space-x-2 flex flex-col gap-2">
+                  <PencilSquareIcon
+                    onClick={handleEdit}
+                    className="w-6 h-6 cursor-pointer"
+                  />
+
+                  <TrashIcon
                     onClick={() => onDelete(user.id)}
-                    className="cursor-pointer"
-                  >
-                    Hapus
-                  </Button>
+                    className="w-6 h-6 cursor-pointer text-red-600"
+                  />
+                  {user.role === "RESEPSIONIS" && onPromote && (
+                    <UserPlusIcon
+                      onClick={() => onPromote(user.id)}
+                      className="w-6 h-6 cursor-pointer text-blue-600"
+                    />
+                  )}
                 </div>
               </CardContent>
             </Card>
           );
         })}
       </div>
+      <CustomDialog
+        open={openForm}
+        onClose={setOpenForm}
+        title="Edit Profile"
+        description="Make changes to your profile here. Click save when you're done."
+      >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nama</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Nama Tamu" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="No Hp" {...field} type="number" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type="submit"
+              className="w-full cursor-pointer"
+              onClick={() => setOpenForm(false)}
+            >
+              Submit
+            </Button>
+          </form>
+        </Form>
+      </CustomDialog>
     </div>
   );
 }
