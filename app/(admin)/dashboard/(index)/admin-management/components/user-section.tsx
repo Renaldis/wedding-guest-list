@@ -20,6 +20,7 @@ import {
   PencilSquareIcon,
   TrashIcon,
   UserPlusIcon,
+  UserMinusIcon,
 } from "@heroicons/react/24/solid";
 
 type Props = {
@@ -27,6 +28,7 @@ type Props = {
   users: Users[];
   onDelete: (id: string) => void;
   onPromote?: (id: string) => void;
+  onDemote?: (id: string) => void;
 };
 
 export default function UserSection({
@@ -34,6 +36,7 @@ export default function UserSection({
   users,
   onDelete,
   onPromote,
+  onDemote,
 }: Props) {
   const form = useForm<z.infer<typeof EditUserFormSchema>>({
     resolver: zodResolver(EditUserFormSchema),
@@ -82,6 +85,12 @@ export default function UserSection({
                     onClick={() => onDelete(user.id)}
                     className="w-6 h-6 cursor-pointer text-red-600"
                   />
+                  {user.role === "ADMIN" && onDemote && (
+                    <UserMinusIcon
+                      onClick={() => onDemote(user.id)}
+                      className="w-6 h-6 cursor-pointer text-yellow-600"
+                    />
+                  )}
                   {user.role === "RESEPSIONIS" && onPromote && (
                     <UserPlusIcon
                       onClick={() => onPromote(user.id)}
@@ -120,7 +129,7 @@ export default function UserSection({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone</FormLabel>
+                  <FormLabel>email</FormLabel>
                   <FormControl>
                     <Input placeholder="No Hp" {...field} type="number" />
                   </FormControl>

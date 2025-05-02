@@ -21,15 +21,23 @@ export default function AdminManagementPage() {
   const handlePromote = (id: string) => {
     console.log("Promote user id:", id);
   };
+  const handleDemote = (id: string) => {
+    console.log("Demote user id:", id);
+  };
 
   const admins = users.filter((u: Users) => u.role === Role.ADMIN);
   const resepsionis = users.filter((u: Users) => u.role === Role.RESEPSIONIS);
   return (
-    <div className="">
+    <div className="pb-10">
       <h1 className="text-2xl font-bold mb-8 text-center">
         Manajemen Admin & Resepsionis
       </h1>
-      <UserSection title="Admin" users={admins} onDelete={handleDelete} />
+      <UserSection
+        title="Admin"
+        users={admins}
+        onDelete={handleDelete}
+        onDemote={handleDemote}
+      />
       <UserSection
         title="Resepsionis"
         users={resepsionis}
