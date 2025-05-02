@@ -8,20 +8,44 @@ import UserSection from "./components/user-section";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 export default function AdminManagementPage() {
-  const { data: users, error } = useSWR("/api/users", fetcher);
+  const { data: users, error, mutate } = useSWR("/api/users", fetcher);
 
   if (!users && !error) return <div>Loading...</div>;
   if (error) return <div>Error loading users: {error.message}</div>;
 
-  const handleDelete = (id: string) => {
-    console.log("Delete user id:", id);
+  // Handle Delete User
+  const handleDelete = async (id: string) => {
+    try {
+      await axios.delete(`/api/users/${id}`);
+      mutate();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      alert("Failed to delete user");
+    }
   };
 
-  const handlePromote = (id: string) => {
-    console.log("Promote user id:", id);
+  // Handle Promote User
+  const handlePromote = async (id: string) => {
+    try {
+      await axios.patch(`/api/users/${id}/promote`);
+      mutate();
+      alert("User promoted to Admin");
+    } catch (error) {
+      console.error("Error promoting user:", error);
+      alert("Failed to promote user");
+    }
   };
-  const handleDemote = (id: string) => {
-    console.log("Demote user id:", id);
+
+  // Handle Demote User
+  const handleDemote = async (id: string) => {
+    try {
+      await axios.patch(`/api/users/${id}/demote`);
+      mutate();
+      alert("User demoted to Resepsionis");
+    } catch (error) {
+      console.error("Error demoting user:", error);
+      alert("Failed to demote user");
+    }
   };
 
   const admins = users.filter((u: Users) => u.role === Role.ADMIN);
