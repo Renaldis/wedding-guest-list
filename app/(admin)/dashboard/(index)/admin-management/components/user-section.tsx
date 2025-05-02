@@ -12,6 +12,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -113,26 +119,63 @@ export default function UserSection({
                   </p>
                 </div>
                 <div className="space-x-2 flex flex-col gap-2">
-                  <PencilSquareIcon
-                    onClick={() => handleEdit(user.id)}
-                    className="w-6 h-6 cursor-pointer"
-                  />
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <PencilSquareIcon
+                          onClick={() => handleEdit(user.id)}
+                          className="w-6 h-6 cursor-pointer"
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Edit User</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
 
-                  <TrashIcon
-                    onClick={() => onDelete(user.id)}
-                    className="w-6 h-6 cursor-pointer text-red-600"
-                  />
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <TrashIcon
+                          onClick={() => onDelete(user.id)}
+                          className="w-6 h-6 cursor-pointer text-red-600"
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Hapus User</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+
                   {user.role === "ADMIN" && onDemote && (
-                    <UserMinusIcon
-                      onClick={() => onDemote(user.id)}
-                      className="w-6 h-6 cursor-pointer text-yellow-600"
-                    />
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <UserMinusIcon
+                            onClick={() => onDemote(user.id)}
+                            className="w-6 h-6 cursor-pointer text-yellow-600"
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Ubah ke Role Resepsionis</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   )}
                   {user.role === "RESEPSIONIS" && onPromote && (
-                    <UserPlusIcon
-                      onClick={() => onPromote(user.id)}
-                      className="w-6 h-6 cursor-pointer text-blue-600"
-                    />
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <UserPlusIcon
+                            onClick={() => onPromote(user.id)}
+                            className="w-6 h-6 cursor-pointer text-blue-600"
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Ubah ke Role Admin</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   )}
                 </div>
               </CardContent>

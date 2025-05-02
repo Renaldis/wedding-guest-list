@@ -52,9 +52,9 @@ export default function AdminManagementPage() {
   const resepsionis = users.filter((u: Users) => u.role === Role.RESEPSIONIS);
   return (
     <div className="pb-10">
-      <h1 className="text-2xl font-bold mb-8 text-center">
+      {/* <h1 className="text-2xl font-bold mb-8 text-center">
         Manajemen Admin & Resepsionis
-      </h1>
+      </h1> */}
       <UserSection
         title="Admin"
         users={admins}
