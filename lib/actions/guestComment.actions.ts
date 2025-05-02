@@ -9,6 +9,7 @@ export async function listGuestMessages() {
       guest: {
         select: {
           name: true,
+          isDeleted: true,
         },
       },
     },

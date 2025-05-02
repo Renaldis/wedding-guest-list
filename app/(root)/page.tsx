@@ -18,7 +18,9 @@ export default async function HomePage({
   }
 
   const messages = await listGuestMessages();
-  const listMessages = messages.filter((message) => message.message !== null);
+  const listMessages = messages.filter(
+    (message) => message.guest?.isDeleted == false
+  );
 
   return <HomeClient guest={guest || defaultGuest} messages={listMessages} />;
 }
