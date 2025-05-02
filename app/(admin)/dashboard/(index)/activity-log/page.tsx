@@ -1,7 +1,10 @@
-export default function GuestMessagesPage() {
+import LogTable from "./components/log-table";
+
+export default function ActivityLogPage() {
   return (
-    <>
-      <h1>Daftar List Ucapan Selamat Para Tamu</h1>
-    </>
+    <div className="px-6">
+      <h1 className="text-2xl font-bold mb-4 text-center">Log Aktivitas</h1>
+      <LogTable />
+    </div>
   );
 }

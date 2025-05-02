@@ -4,14 +4,14 @@ import { generateRsvpCode } from "@/lib/utils";
 
 export const users = [
   {
-    id: "user-admin-1",
+    id: "user-1",
     name: "Admin Renaldi",
     email: "admin@event.com",
     password: hashSync("12345678", 10),
     role: Role.ADMIN,
   },
   {
-    id: "user-resepsionis-1",
+    id: "user-2",
     name: "Resepsionis Cici",
     email: "resepsionis@event.com",
     password: hashSync("12345678", 10),

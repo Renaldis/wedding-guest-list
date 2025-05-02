@@ -21,6 +21,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   guests    Guest[]  @relation("UpdatedBy")
+  Log       Log[]
 }
 
 model Guest {
@@ -37,6 +38,7 @@ model Guest {
   phone        String?        @unique
   updatedBy    User?          @relation("UpdatedBy", fields: [updatedById], references: [id])
   GuestComment GuestComment[]
+  Log          Log[]
 }
 
 model GuestComment {
@@ -53,6 +55,8 @@ model Log {
   id        String   @id @default(uuid())
   action    String
   guestId   String?
+  guest     Guest?   @relation(fields: [guestId], references: [id])
   userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 }

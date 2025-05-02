@@ -1,0 +1,8 @@
+-- DropEnum
+DROP TYPE "ActorType";
+
+-- AddForeignKey
+ALTER TABLE "Log" ADD CONSTRAINT "Log_guestId_fkey" FOREIGN KEY ("guestId") REFERENCES "Guest"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Log" ADD CONSTRAINT "Log_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
