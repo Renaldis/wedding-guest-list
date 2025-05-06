@@ -13,6 +13,7 @@ import VenueSection from "./venue-section";
 import FormRSVPSection from "./form-rsvp-section";
 import { GuestComment, GuestPropClient } from "@/types";
 import ListCommentSection from "./list-comment-section";
+import EndSection from "./end-section";
 
 export default function LandingPageGuest({
   guest,
@@ -69,6 +70,8 @@ export default function LandingPageGuest({
         <FormRSVPSection guest={guest} />
         {/* List Comment Section */}
         <ListCommentSection messages={messages} />
+        {/* End Section */}
+        <EndSection />
       </div>
     </div>
   );

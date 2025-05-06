@@ -43,6 +43,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { deleteGuest, editGuest } from "@/lib/actions/guest.actions";
 import Cookies from "js-cookie";
+import UploadModal from "./uploadModal";
 
 export default function DashboardTable({
   guests,
@@ -54,6 +55,10 @@ export default function DashboardTable({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [userId, setUserId] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -193,6 +198,18 @@ export default function DashboardTable({
           </select>
           <span className="text-sm">data per halaman</span>
         </div>
+        <div className="ml-auto flex gap-3">
+          <Button
+            onClick={handleOpenModal}
+            className="bg-green-600 rounded-sm hover:bg-green-800 cursor-pointer"
+          >
+            Import Data
+          </Button>
+          <Button className="bg-green-600 rounded-sm hover:bg-green-800 cursor-pointer">
+            Eksport Data
+          </Button>
+        </div>
+        <UploadModal isOpen={isModalOpen} onClose={handleCloseModal} />
       </div>
       <Table>
         <TableHeader>
