@@ -159,7 +159,9 @@ export default function DashboardTable({
       });
     }
   }, [guest, form, userId]);
-
+  const handleExport = () => {
+    window.open("/api/export-guests", "_blank");
+  };
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
       <div className="flex items-center gap-5 mt-2 mb-5 md:flex-row flex-col">
@@ -205,7 +207,10 @@ export default function DashboardTable({
           >
             Import Data
           </Button>
-          <Button className="bg-green-600 rounded-sm hover:bg-green-800 cursor-pointer">
+          <Button
+            className="bg-green-600 rounded-sm hover:bg-green-800 cursor-pointer"
+            onClick={handleExport}
+          >
             Eksport Data
           </Button>
         </div>
