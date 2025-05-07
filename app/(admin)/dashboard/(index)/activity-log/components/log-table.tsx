@@ -23,7 +23,7 @@ export default function LogTable() {
   console.log(error);
   return (
     <Card>
-      <CardContent className="overflow-x-auto p-4">
+      <CardContent className="overflow-x-auto md:p-4">
         <Table>
           <TableHeader>
             <TableRow>
