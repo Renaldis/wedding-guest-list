@@ -164,7 +164,7 @@ export default function DashboardTable({
   };
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
-      <div className="flex items-center gap-5 mt-2 mb-5 md:flex-row flex-col">
+      <div className="flex items-center gap-5 mt-2 mb-5 lg:flex-row flex-col">
         <div className="md:flex md:flex-row gap-2 flex-col">
           <h1 className="text-lg font-semibold text-center">Daftar Tamu</h1>
           <Input
@@ -200,7 +200,7 @@ export default function DashboardTable({
           </select>
           <span className="text-sm">data per halaman</span>
         </div>
-        <div className="ml-auto flex gap-3">
+        <div className="mx-auto md:ml-auto flex gap-3">
           <Button
             onClick={handleOpenModal}
             className="bg-green-600 rounded-sm hover:bg-green-800 cursor-pointer"

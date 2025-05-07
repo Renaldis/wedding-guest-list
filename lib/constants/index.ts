@@ -9,8 +9,8 @@ import {
   UserPlusIcon,
   ChatBubbleLeftRightIcon,
   LockClosedIcon,
-  Cog8ToothIcon,
-  KeyIcon,
+  // Cog8ToothIcon,
+  // KeyIcon,
   ClipboardDocumentCheckIcon,
 } from "@heroicons/react/24/solid";
 import LocIcon from "@/public/location-lordicon.gif";
@@ -40,18 +40,18 @@ export const menuItems = [
     icon: LockClosedIcon,
     roles: ["ADMIN"],
   },
-  {
-    name: "Pengaturan Acara",
-    href: "/dashboard/event-settings",
-    icon: Cog8ToothIcon,
-    roles: ["ADMIN"],
-  },
-  {
-    name: "Keamanan",
-    href: "/dashboard/security",
-    icon: KeyIcon,
-    roles: ["ADMIN"],
-  },
+  // {
+  //   name: "Pengaturan Acara",
+  //   href: "/dashboard/event-settings",
+  //   icon: Cog8ToothIcon,
+  //   roles: ["ADMIN"],
+  // },
+  // {
+  //   name: "Keamanan",
+  //   href: "/dashboard/security",
+  //   icon: KeyIcon,
+  //   roles: ["ADMIN"],
+  // },
   {
     name: "Log Aktivitas",
     href: "/dashboard/activity-log",

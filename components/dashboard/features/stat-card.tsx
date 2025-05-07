@@ -41,18 +41,21 @@ export default function StatCard({ statData }: { statData: StatData }) {
             const Icon = item.icon;
             return (
               <Card
-                className={`shadow-lg rounded-lg ${item.bg_color} relative`}
                 key={idx}
+                className={`shadow-lg rounded-lg relative pt-10 ${item.bg_color}`}
               >
-                <CardHeader className="flex items-center justify-center">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white shadow-md absolute -top-4">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                  <div className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-md">
                     <Icon className="w-6 h-6 text-gray-700" />
                   </div>
+                </div>
 
-                  <p className="text-sm font-semibold text-gray-800">
+                <CardHeader className="text-center">
+                  <p className="text-sm font-semibold text-gray-800 mt-3">
                     {item.title}
                   </p>
                 </CardHeader>
+
                 <CardContent className="flex justify-center items-center">
                   <p className="font-medium text-xl text-gray-900">
                     {item.value}
