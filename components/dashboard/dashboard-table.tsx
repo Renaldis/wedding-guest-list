@@ -224,7 +224,7 @@ export default function DashboardTable({
             <TableHead>No. HP</TableHead>
             <TableHead>Status RSVP</TableHead>
             <TableHead>konfirmasi kehadiran</TableHead>
-            <TableHead>Status Hadir di Acara</TableHead>
+            <TableHead>Status Hadir</TableHead>
             <TableHead>Ditambahkan</TableHead>
             <TableHead>Diperbarui</TableHead>
             <TableHead>Diupdate Oleh</TableHead>

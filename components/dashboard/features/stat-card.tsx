@@ -22,7 +22,7 @@ export default function StatCard({ statData }: { statData: StatData }) {
     },
     {
       icon: DocumentCheckIcon,
-      title: "Konfirmasi RSVP",
+      title: "Konfirmasi Kehadiran",
       value: statData.totalConfirmRSVP,
       bg_color: "bg-yellow-100",
     },
