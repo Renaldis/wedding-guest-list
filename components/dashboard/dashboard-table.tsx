@@ -159,8 +159,19 @@ export default function DashboardTable({
       });
     }
   }, [guest, form, userId]);
-  const handleExport = () => {
-    window.open("/api/export-guests", "_blank");
+  const handleExport = async () => {
+    await window.open("/api/export-guests", "_blank");
+  };
+
+  const handleGenReport = async () => {
+    const res = await fetch("/api/generate-report");
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Laporan-Tamu.docx";
+    a.click();
+    a.remove();
   };
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
@@ -212,6 +223,12 @@ export default function DashboardTable({
             onClick={handleExport}
           >
             Eksport Data
+          </Button>
+          <Button
+            className="bg-green-600 rounded-sm hover:bg-green-800 cursor-pointer"
+            onClick={handleGenReport}
+          >
+            Generate Report
           </Button>
         </div>
         <UploadModal isOpen={isModalOpen} onClose={handleCloseModal} />

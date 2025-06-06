@@ -3,12 +3,14 @@ import {
   UserGroupIcon,
   DocumentCheckIcon,
   HandThumbUpIcon,
+  HandThumbDownIcon,
 } from "@heroicons/react/24/solid";
 
 type StatData = {
   totalGuest: number;
   totalConfirmRSVP: number;
   totalPresent: number;
+  totalNotPresent: number;
   totalAttending: number;
 };
 
@@ -28,9 +30,15 @@ export default function StatCard({ statData }: { statData: StatData }) {
     },
     {
       icon: HandThumbUpIcon,
-      title: "Tamu Sudah Hadir",
+      title: "Tamu Hadir",
       value: statData.totalPresent,
       bg_color: "bg-green-200",
+    },
+    {
+      icon: HandThumbDownIcon,
+      title: "Tamu Belum Hadir",
+      value: statData.totalNotPresent,
+      bg_color: "bg-red-200",
     },
   ];
   return (
