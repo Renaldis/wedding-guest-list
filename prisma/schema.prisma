@@ -60,3 +60,42 @@ model Log {
   user      User?    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 }
+
+model Wedding {
+  id                   String  @id @default(uuid())
+  groomName            String
+  brideName            String
+  groomInstagram       String? // optional
+  brideInstagram       String? // optional
+  groomFather          String
+  groomMother          String
+  brideFather          String
+  brideMother          String
+  groomPhoto           String // URL or path
+  bridePhoto           String // URL or path
+  heroImage            String // landing section image
+  invitationBackground String // background image in the invitation section
+  closingImage         String // image for the closing section
+  verseText            String
+  verseSource          String
+  closingTitle         String
+  closingMessage       String
+
+  events    Event[] // relation to event(s)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id          String @id @default(uuid())
+  weddingId   String
+  title       String
+  date        String
+  startTime   String
+  endTime     String
+  streetName  String
+  fullAddress String
+  mapsUrl     String
+
+  wedding Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+}

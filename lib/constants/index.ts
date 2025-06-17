@@ -12,6 +12,7 @@ import {
   // Cog8ToothIcon,
   // KeyIcon,
   ClipboardDocumentCheckIcon,
+  RectangleStackIcon,
 } from "@heroicons/react/24/solid";
 import LocIcon from "@/public/location-lordicon.gif";
 
@@ -56,6 +57,12 @@ export const menuItems = [
     name: "Log Aktivitas",
     href: "/dashboard/activity-log",
     icon: ClipboardDocumentCheckIcon,
+    roles: ["ADMIN"],
+  },
+  {
+    name: "Manajemen Halaman Undangan",
+    icon: RectangleStackIcon,
+    href: "/dashboard/settings-page",
     roles: ["ADMIN"],
   },
 ];
