@@ -39,7 +39,7 @@ export default function VenueSection() {
                   className="rounded-full text-slate-700 border-slate-700 cursor-pointer"
                   onClick={() => window.open(venue.mapUrl, "_blank")}
                 >
-                  Lihat Lokasi
+                  Lihat Lokasi {venue.title}
                 </Button>
               </CardFooter>
 

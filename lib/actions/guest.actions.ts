@@ -46,6 +46,9 @@ export async function getPaginatedGuest({
 
   const guests = await prisma.guest.findMany({
     where: whereClause,
+    include: {
+      updatedBy: true,
+    },
     orderBy: {
       [sortBy]: sortOrder,
     },

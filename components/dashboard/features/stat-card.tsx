@@ -36,7 +36,7 @@ export default function StatCard({ statData }: { statData: StatData }) {
     },
     {
       icon: HandThumbDownIcon,
-      title: "Tamu Belum Hadir",
+      title: "Tamu Belum/Tidak Hadir",
       value: statData.totalNotPresent,
       bg_color: "bg-red-200",
     },

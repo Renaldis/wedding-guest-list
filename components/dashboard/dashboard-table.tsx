@@ -169,10 +169,11 @@ export default function DashboardTable({
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Laporan-Tamu.docx";
+    a.download = "Laporan-Kehadiran-Tamu.xlsx";
     a.click();
     a.remove();
   };
+
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
       <div className="flex items-center gap-5 mt-2 mb-5 lg:flex-row flex-col">
@@ -273,7 +274,9 @@ export default function DashboardTable({
               <TableCell>
                 {format(new Date(guest.updatedAt), "yyyy-MM-dd HH:mm:ss")}
               </TableCell>
-              <TableCell>{guest.updatedById || "-"}</TableCell>
+              <TableCell align="center">
+                {guest.updatedBy?.name || "-"}
+              </TableCell>
               <TableCell className="flex">
                 <PencilSquareIcon
                   className="text-blue-600 cursor-pointer w-6 h-6 hover:text-blue-800"

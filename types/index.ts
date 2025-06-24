@@ -15,6 +15,10 @@ export type FormRegister = {
   role: Role;
 };
 
+type User = {
+  name: string;
+};
+
 export type GuestProp = {
   id: string;
   name: string;
@@ -29,6 +33,7 @@ export type GuestProp = {
   updatedById?: string | null;
   updatedAt: Date;
   createdAt: Date;
+  updatedBy: User | null;
 };
 
 export type GuestPropClient = {
