@@ -240,7 +240,7 @@ export default function DashboardTable({
             <TableHead className="w-[80px]">No</TableHead>
             <TableHead>Nama</TableHead>
             <TableHead>No. HP</TableHead>
-            <TableHead>Status RSVP</TableHead>
+            {/* <TableHead>Status RSVP</TableHead> */}
             <TableHead>konfirmasi kehadiran</TableHead>
             <TableHead>Status Hadir</TableHead>
             <TableHead>Ditambahkan</TableHead>
@@ -257,9 +257,9 @@ export default function DashboardTable({
               </TableCell>
               <TableCell>{guest.name}</TableCell>
               <TableCell>{guest.phone}</TableCell>
-              <TableCell>
+              {/* <TableCell>
                 {guest.isRSVPed ? "Sudah RSVP" : "Belum RSVP"}
-              </TableCell>
+              </TableCell> */}
               <TableCell>
                 {guest.isAttending === true
                   ? "Akan Hadir"
