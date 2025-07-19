@@ -28,6 +28,10 @@ export default async function DashboardPage({
 
   const statData = await totalGuest();
 
+  if (!guests || !totalGuest) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="pb-10">
       <StatCard statData={statData} />
