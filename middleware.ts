@@ -5,7 +5,10 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get("token");
   const url = req.nextUrl;
 
-  if (!token?.value && !url.pathname.startsWith("/dashboard/login")) {
+  const publicRoutes = ["/dashboard/login", "/dashboard/register"];
+  const isPublicRoute = publicRoutes.includes(url.pathname);
+
+  if (!token?.value && !isPublicRoute) {
     return NextResponse.redirect(new URL("/dashboard/login", req.url));
   }
 
@@ -18,7 +21,11 @@ export function middleware(req: NextRequest) {
     } catch (err) {
       console.error("Token decode error", err);
 
-      return NextResponse.redirect(new URL("/dashboard/login", req.url));
+      const response = NextResponse.redirect(
+        new URL("/dashboard/login", req.url)
+      );
+      response.cookies.delete("token");
+      return response;
     }
   }
 
@@ -30,5 +37,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/dashboard/login"],
+  matcher: ["/dashboard/:path*"],
 };

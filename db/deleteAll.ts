@@ -5,7 +5,7 @@ async function main() {
   console.log("Start Deleting..");
   await prisma.log.deleteMany();
   await prisma.guest.deleteMany();
-  await prisma.user.deleteMany();
+  await prisma.guestComment.deleteMany();
 
   console.log("all data has been deleted");
 }

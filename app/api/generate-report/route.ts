@@ -6,58 +6,172 @@ import ExcelJS from "exceljs";
 const prisma = new PrismaClient();
 
 export async function GET() {
-  const guests = await prisma.guest.findMany({
-    where: {
-      isDeleted: false,
-    },
-  });
+  try {
+    const guests = await prisma.guest.findMany({
+      where: {
+        isDeleted: false,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
 
-  const workbook = new ExcelJS.Workbook();
-  const worksheet = workbook.addWorksheet("Laporan Kehadiran Tamu");
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = "Sistem Manajemen Tamu";
+    workbook.created = new Date();
 
-  // Header
-  worksheet.addRow([
-    "DAFTAR TAMU",
-    "KONFIRMASI KEHADIRAN",
-    "TAMU HADIR",
-    "TAMU TIDAK HADIR",
-  ]);
+    const worksheet = workbook.addWorksheet("Laporan Kehadiran Tamu");
 
-  let totalKonfirmasi = 0;
-  let totalHadir = 0;
-  let totalTidakHadir = 0;
+    // === 1. MEMBUAT JUDUL UTAMA DAN TIMESTAMP ===
+    worksheet.mergeCells("A1:D1");
+    const title = worksheet.getCell("A1");
+    title.value = "Laporan Kehadiran Tamu Undangan";
+    title.font = {
+      name: "Calibri",
+      size: 18,
+      bold: true,
+    };
+    title.alignment = { vertical: "middle", horizontal: "center" };
 
-  // Isi data per tamu
-  guests.forEach((guest) => {
-    const konfirmasi = guest.isRSVPed ? "✅" : "";
-    const hadir = guest.isPresent ? "✅" : "";
-    const tidakHadir = !guest.isPresent ? "✅" : "";
+    // [BARU] Menambahkan tanggal dan waktu laporan dibuat
+    const now = new Date();
+    const formattedDate = new Intl.DateTimeFormat("id-ID", {
+      dateStyle: "full",
+      timeStyle: "long",
+      timeZone: "Asia/Jakarta",
+    }).format(now);
 
-    if (guest.isRSVPed) totalKonfirmasi++;
-    if (guest.isPresent) totalHadir++;
-    else totalTidakHadir++;
+    worksheet.mergeCells("A2:D2");
+    const dateCell = worksheet.getCell("A2");
+    dateCell.value = `Laporan dibuat pada: ${formattedDate}`;
+    dateCell.font = { name: "Calibri", size: 9, italic: true };
+    dateCell.alignment = { vertical: "middle", horizontal: "center" };
 
-    worksheet.addRow([guest.name, konfirmasi, hadir, tidakHadir]);
-  });
+    worksheet.addRow([]); // Baris kosong untuk spasi
 
-  // Tambahkan baris total
-  worksheet.addRow(["Total", totalKonfirmasi, totalHadir, totalTidakHadir]);
+    // === 2. MEMBUAT STATISTIK RINGKAS ===
+    const totalDiundang = guests.length;
+    const totalKonfirmasi = guests.filter((g) => g.isRSVPed).length;
+    const totalHadir = guests.filter((g) => g.isPresent).length;
+    const totalTidakHadir = totalDiundang - totalHadir;
 
-  // Styling sederhana (opsional)
-  worksheet.columns.forEach((col) => {
-    col.width = 20;
-    col.alignment = { vertical: "middle", horizontal: "center" };
-  });
+    const summaryData = [
+      ["Total Tamu Diundang", totalDiundang],
+      ["Total Konfirmasi Hadir", totalKonfirmasi],
+      ["Total Tamu Hadir", totalHadir],
+      ["Total Tamu Tidak Hadir", totalTidakHadir],
+    ];
 
-  const buffer = await workbook.xlsx.writeBuffer();
+    summaryData.forEach((rowData) => {
+      // Tambahkan baris baru dan langsung dapatkan objek barisnya
+      const newRow = worksheet.addRow(rowData);
 
-  return new NextResponse(buffer, {
-    status: 200,
-    headers: {
-      "Content-Type":
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "Content-Disposition":
-        'attachment; filename="Laporan-Kehadiran-Tamu.xlsx"',
-    },
-  });
+      // Ambil sel berdasarkan nomor kolom (A=1, B=2) dari baris yang BARU dibuat
+      const labelCell = newRow.getCell(1);
+      labelCell.font = { bold: true };
+      labelCell.border = {
+        top: { style: "thin" },
+        left: { style: "thin" },
+        bottom: { style: "thin" },
+        right: { style: "thin" },
+      };
+
+      const valueCell = newRow.getCell(2);
+      valueCell.border = {
+        top: { style: "thin" },
+        left: { style: "thin" },
+        bottom: { style: "thin" },
+        right: { style: "thin" },
+      };
+
+      // [DIUBAH] Atur alignment untuk sel nilai agar rata kanan
+      valueCell.alignment = { horizontal: "right" };
+    });
+
+    worksheet.addRow([]); // Baris kosong untuk spasi
+
+    // === 3. MEMBUAT HEADER TABEL DATA ===
+    const headerRow = worksheet.addRow([
+      "No",
+      "Nama Tamu",
+      "Konfirmasi Hadir (RSVP)",
+      "Status Kehadiran",
+    ]);
+
+    headerRow.eachCell((cell) => {
+      cell.font = { bold: true, color: { argb: "FFFFFFFF" } };
+      cell.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "FF4472C4" },
+      };
+      cell.alignment = { vertical: "middle", horizontal: "center" };
+      cell.border = {
+        top: { style: "thin" },
+        left: { style: "thin" },
+        bottom: { style: "thin" },
+        right: { style: "thin" },
+      };
+    });
+
+    // === 4. MENGISI DATA TAMU ===
+    guests.forEach((guest, index) => {
+      const rowData = [
+        index + 1,
+        guest.name,
+        guest.isRSVPed ? "Ya" : "Belum",
+        guest.isPresent ? "Hadir" : "Tidak Hadir",
+      ];
+
+      const dataRow = worksheet.addRow(rowData);
+
+      dataRow.eachCell((cell) => {
+        cell.border = {
+          top: { style: "thin" },
+          left: { style: "thin" },
+          bottom: { style: "thin" },
+          right: { style: "thin" },
+        };
+        cell.alignment = {
+          vertical: "middle",
+          horizontal: "left",
+          wrapText: true,
+        };
+      });
+      dataRow.getCell(1).alignment = {
+        vertical: "middle",
+        horizontal: "center",
+      };
+      dataRow.getCell(3).alignment = {
+        vertical: "middle",
+        horizontal: "center",
+      };
+      dataRow.getCell(4).alignment = {
+        vertical: "middle",
+        horizontal: "center",
+      };
+    });
+
+    // === 5. MENGATUR LEBAR KOLOM (TETAP/FIXED) ===
+    worksheet.getColumn("A").width = 20;
+    worksheet.getColumn("B").width = 40;
+    worksheet.getColumn("C").width = 25;
+    worksheet.getColumn("D").width = 25;
+
+    // === 6. GENERATE BUFFER DAN KIRIM RESPONSE ===
+    const buffer = await workbook.xlsx.writeBuffer();
+
+    return new NextResponse(buffer, {
+      status: 200,
+      headers: {
+        "Content-Type":
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "Content-Disposition":
+          'attachment; filename="Laporan-Kehadiran-Tamu.xlsx"',
+      },
+    });
+  } catch (error) {
+    console.error("Gagal membuat laporan Excel:", error);
+    return new NextResponse("Terjadi kesalahan pada server", { status: 500 });
+  }
 }
