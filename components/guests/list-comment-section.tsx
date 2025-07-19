@@ -8,6 +8,9 @@ export default function ListCommentSection({
 }: {
   messages: GuestComment[];
 }) {
+  const listMessage = messages.filter(
+    (item) => item.message !== "" || item.message !== null
+  );
   return (
     <section className="px-8 py-3 md:py-6 pb-28">
       <div className="h-[450px] bg-gray-200 flex flex-col">
@@ -19,7 +22,7 @@ export default function ListCommentSection({
         <div className="overflow-y-auto flex-1 p-4 bg-gray-100">
           {/* List komentar */}
           <div className="space-y-4">
-            {messages.map((message) => (
+            {listMessage?.map((message) => (
               <div key={message.id} className="flex items-start">
                 {/* Segitiga pointer */}
                 <div className="w-0 h-0 border-t-[16px] border-b-[16px] border-r-[16px] border-t-transparent border-b-transparent border-r-white"></div>

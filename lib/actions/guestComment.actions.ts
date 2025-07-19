@@ -4,6 +4,13 @@ const prisma = new PrismaClient();
 
 export async function listGuestMessages() {
   const messages = await prisma.guestComment.findMany({
+    where: {
+      message: {
+        not: {
+          equals: "",
+        },
+      },
+    },
     orderBy: { createdAt: "desc" },
     include: {
       guest: {
