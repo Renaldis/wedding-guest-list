@@ -14,9 +14,9 @@ enum Role {
 
 model User {
   id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
+  name      String   @db.VarChar(100)
+  email     String   @unique @db.VarChar(100)
+  password  String   @db.VarChar(255)
   role      Role     @default(RESEPSIONIS)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -26,16 +26,16 @@ model User {
 
 model Guest {
   id           String         @id @default(uuid())
-  name         String
-  rsvpCode     String         @unique
+  name         String         @db.VarChar(100)
+  rsvpCode     String         @unique @db.VarChar(20)
   isAttending  Boolean?       @default(false)
   isPresent    Boolean        @default(false)
   isDeleted    Boolean        @default(false)
-  updatedById  String?
+  updatedById  String?        @db.VarChar(36)
   updatedAt    DateTime       @updatedAt
   createdAt    DateTime       @default(now())
   isRSVPed     Boolean        @default(false)
-  phone        String?        @unique
+  phone        String?        @unique @db.VarChar(15)
   updatedBy    User?          @relation("UpdatedBy", fields: [updatedById], references: [id])
   GuestComment GuestComment[]
   Log          Log[]
@@ -44,8 +44,8 @@ model Guest {
 model GuestComment {
   id        String   @id @default(uuid())
   guest     Guest?   @relation(fields: [guestId], references: [id])
-  guestId   String?
-  message   String?
+  guestId   String?  @db.VarChar(36)
+  message   String?  @db.VarChar(255)
   isDeleted Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -53,10 +53,10 @@ model GuestComment {
 
 model Log {
   id        String   @id @default(uuid())
-  action    String
-  guestId   String?
+  action    String   @db.VarChar(100)
+  guestId   String?  @db.VarChar(36)
   guest     Guest?   @relation(fields: [guestId], references: [id])
-  userId    String?
+  userId    String?  @db.VarChar(36)
   user      User?    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 }

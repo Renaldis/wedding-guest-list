@@ -15,7 +15,7 @@ export async function totalGuest() {
       prisma.guest.count({ where: { isDeleted: false } }),
       prisma.guest.count({ where: { isRSVPed: true } }),
       prisma.guest.count({ where: { isPresent: true } }),
-      prisma.guest.count({ where: { isPresent: !true } }),
+      prisma.guest.count({ where: { isPresent: !true, isDeleted: false } }),
       prisma.guest.count({ where: { isAttending: true } }),
     ]);
 
