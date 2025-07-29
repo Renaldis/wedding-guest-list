@@ -18,15 +18,18 @@ export default async function DashboardPage({
   const search = params.search || "";
   const limit = Number(params.limit) || 10;
 
-  const { guests, totalPages } = await getPaginatedGuest({
-    page,
-    limit,
-    sortBy: "name",
-    sortOrder: "asc",
-    search,
-  });
+  const [guestResult, statData] = await Promise.all([
+    getPaginatedGuest({
+      page,
+      limit,
+      sortBy: "name",
+      sortOrder: "asc",
+      search,
+    }),
+    totalGuest(),
+  ]);
 
-  const statData = await totalGuest();
+  const { guests, totalPages } = guestResult;
 
   if (!guests || !totalGuest) {
     return <div>Loading...</div>;
