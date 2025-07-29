@@ -20,7 +20,7 @@ export default function LogTable() {
 
   if (error) return <div>Error fetching logs</div>;
   if (!logs) return <div>Loading logs...</div>;
-  console.log(error);
+
   return (
     <Card>
       <CardContent className="overflow-x-auto md:p-4">

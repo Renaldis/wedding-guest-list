@@ -1,40 +1,41 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import DashboardTable from "@/components/dashboard/dashboard-table";
 import StatCard from "@/components/dashboard/features/stat-card";
-import { totalGuest } from "@/lib/actions/features/guestStat.actions";
-import { getPaginatedGuest } from "@/lib/actions/guest.actions";
+import useSWR from "swr";
 
-export const metadata = {
-  title: "Dashboard",
-};
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default async function DashboardPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ page: string; search: string; limit: string }>;
-}) {
-  const params = await searchParams;
+export default function DashboardPage() {
+  const searchParams = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
+  const limit = Number(searchParams.get("limit")) || 10;
+  const search = searchParams.get("search") || "";
 
-  const page = Number(params.page) || 1;
-  const search = params.search || "";
-  const limit = Number(params.limit) || 10;
+  const {
+    data: guestData,
+    error: guestError,
+    isLoading: guestLoading,
+  } = useSWR(
+    `/api/guest?page=${page}&limit=${limit}&search=${encodeURIComponent(
+      search
+    )}`,
+    fetcher
+  );
 
-  const [guestResult, statData] = await Promise.all([
-    getPaginatedGuest({
-      page,
-      limit,
-      sortBy: "name",
-      sortOrder: "asc",
-      search,
-    }),
-    totalGuest(),
-  ]);
+  const {
+    data: statData,
+    error: statError,
+    isLoading: statLoading,
+  } = useSWR(`/api/stat`, fetcher);
 
-  const { guests, totalPages } = guestResult;
+  if (guestLoading || statLoading) return <div className="p-4">Loading...</div>;
+  if (guestError || statError)
+    return <div className="p-4 text-red-500">Failed to load data.</div>;
 
-  if (!guests || !totalGuest) {
-    return <div>Loading...</div>;
-  }
-
+  const guests = guestData.guests;
+  const totalPages = guestData.totalPages;
   return (
     <div className="pb-10">
       <StatCard statData={statData} />
