@@ -7,9 +7,11 @@ import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { type FormLogin } from "@/types";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
 
   const {
     register,
@@ -23,7 +25,7 @@ export default function LoginForm() {
 
       Cookies.set("token", response.data.token);
 
-      window.location.href = "/dashboard";
+      router.push("/dashboard");
     } catch (error) {
       if (error instanceof AxiosError) {
         setErrorMessage(error.response?.data?.message);

@@ -20,9 +20,8 @@ export async function GET() {
     workbook.creator = "Sistem Manajemen Tamu";
     workbook.created = new Date();
 
-    const worksheet = workbook.addWorksheet("Laporan Kehadiran Tamu");
+    const worksheet = workbook.addWorksheet("Laporan Kehadiran Tamu"); // === 1. MEMBUAT JUDUL UTAMA DAN TIMESTAMP ===
 
-    // === 1. MEMBUAT JUDUL UTAMA DAN TIMESTAMP ===
     worksheet.mergeCells("A1:D1");
     const title = worksheet.getCell("A1");
     title.value = "Laporan Kehadiran Tamu Undangan";
@@ -33,7 +32,6 @@ export async function GET() {
     };
     title.alignment = { vertical: "middle", horizontal: "center" };
 
-    // [BARU] Menambahkan tanggal dan waktu laporan dibuat
     const now = new Date();
     const formattedDate = new Intl.DateTimeFormat("id-ID", {
       dateStyle: "full",
@@ -47,9 +45,8 @@ export async function GET() {
     dateCell.font = { name: "Calibri", size: 9, italic: true };
     dateCell.alignment = { vertical: "middle", horizontal: "center" };
 
-    worksheet.addRow([]); // Baris kosong untuk spasi
+    worksheet.addRow([]); // Baris kosong untuk spasi // === 2. MEMBUAT STATISTIK RINGKAS ===
 
-    // === 2. MEMBUAT STATISTIK RINGKAS ===
     const totalDiundang = guests.length;
     const totalKonfirmasi = guests.filter((g) => g.isRSVPed).length;
     const totalHadir = guests.filter((g) => g.isPresent).length;
@@ -63,10 +60,7 @@ export async function GET() {
     ];
 
     summaryData.forEach((rowData) => {
-      // Tambahkan baris baru dan langsung dapatkan objek barisnya
       const newRow = worksheet.addRow(rowData);
-
-      // Ambil sel berdasarkan nomor kolom (A=1, B=2) dari baris yang BARU dibuat
       const labelCell = newRow.getCell(1);
       labelCell.font = { bold: true };
       labelCell.border = {
@@ -83,14 +77,11 @@ export async function GET() {
         bottom: { style: "thin" },
         right: { style: "thin" },
       };
-
-      // [DIUBAH] Atur alignment untuk sel nilai agar rata kanan
       valueCell.alignment = { horizontal: "right" };
     });
 
-    worksheet.addRow([]); // Baris kosong untuk spasi
+    worksheet.addRow([]); // Baris kosong untuk spasi // === 3. MEMBUAT HEADER TABEL DATA ===
 
-    // === 3. MEMBUAT HEADER TABEL DATA ===
     const headerRow = worksheet.addRow([
       "No",
       "Nama Tamu",
@@ -112,9 +103,8 @@ export async function GET() {
         bottom: { style: "thin" },
         right: { style: "thin" },
       };
-    });
+    }); // === 4. MENGISI DATA TAMU ===
 
-    // === 4. MENGISI DATA TAMU ===
     guests.forEach((guest, index) => {
       const rowData = [
         index + 1,
@@ -123,7 +113,7 @@ export async function GET() {
         guest.isPresent ? "Hadir" : "Tidak Hadir",
       ];
 
-      const dataRow = worksheet.addRow(rowData);
+      const dataRow = worksheet.addRow(rowData); // Terapkan border dan alignment default untuk semua sel di baris ini
 
       dataRow.eachCell((cell) => {
         cell.border = {
@@ -137,7 +127,31 @@ export async function GET() {
           horizontal: "left",
           wrapText: true,
         };
-      });
+      }); // === [PERUBAHAN] MULAI: LOGIKA PEWARNAAN KONDISIONAL ===
+
+      const statusCell = dataRow.getCell(4); // Kolom ke-4 adalah 'Status Kehadiran'
+
+      if (guest.isPresent) {
+        // Jika HADIR, beri warna latar hijau dan teks hijau tua
+        statusCell.fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: "FFC6EFCE" }, // Warna stabilo hijau
+        };
+        statusCell.font = {
+          color: { argb: "FF006100" }, // Warna teks hijau tua
+        };
+      } else {
+        // Jika TIDAK HADIR, beri warna latar merah dan teks merah tua
+        statusCell.fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: "FFFFC7CE" }, // Warna stabilo merah
+        };
+        statusCell.font = {
+          color: { argb: "FF9C0006" }, // Warna teks merah tua
+        };
+      } // === [PERUBAHAN] SELESAI === // Atur alignment spesifik setelah pewarnaan
       dataRow.getCell(1).alignment = {
         vertical: "middle",
         horizontal: "center",
@@ -145,20 +159,18 @@ export async function GET() {
       dataRow.getCell(3).alignment = {
         vertical: "middle",
         horizontal: "center",
-      };
+      }; // Pastikan sel status kehadiran juga tetap di tengah
       dataRow.getCell(4).alignment = {
         vertical: "middle",
         horizontal: "center",
       };
-    });
+    }); // === 5. MENGATUR LEBAR KOLOM (TETAP/FIXED) ===
 
-    // === 5. MENGATUR LEBAR KOLOM (TETAP/FIXED) ===
     worksheet.getColumn("A").width = 20;
     worksheet.getColumn("B").width = 40;
     worksheet.getColumn("C").width = 25;
-    worksheet.getColumn("D").width = 25;
+    worksheet.getColumn("D").width = 25; // === 6. GENERATE BUFFER DAN KIRIM RESPONSE ===
 
-    // === 6. GENERATE BUFFER DAN KIRIM RESPONSE ===
     const buffer = await workbook.xlsx.writeBuffer();
 
     return new NextResponse(buffer, {

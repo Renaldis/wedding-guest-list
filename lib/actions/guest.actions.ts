@@ -44,21 +44,36 @@ export async function getPaginatedGuest({
     }),
   };
 
-  const guests = await prisma.guest.findMany({
-    where: whereClause,
-    include: {
-      updatedBy: true,
-    },
-    orderBy: {
-      [sortBy]: sortOrder,
-    },
-    skip,
-    take: limit,
-  });
-
-  const total = await prisma.guest.count({
-    where: whereClause,
-  });
+  const [guests, total] = await Promise.all([
+    prisma.guest.findMany({
+      where: whereClause,
+      select: {
+        id: true,
+        name: true,
+        phone: true,
+        isAttending: true,
+        isPresent: true,
+        rsvpCode: true,
+        isRSVPed: true,
+        createdAt: true,
+        updatedAt: true,
+        updatedBy: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        [sortBy]: sortOrder,
+      },
+      skip,
+      take: limit,
+    }),
+    prisma.guest.count({
+      where: whereClause,
+    }),
+  ]);
 
   return {
     guests,
