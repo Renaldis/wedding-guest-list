@@ -88,6 +88,12 @@ export async function getGuest({ id }: { id: string }) {
     where: {
       id,
     },
+    select: {
+      id: true,
+      name: true,
+      phone: true,
+      isPresent: true,
+    },
   });
 
   if (!guest) {
